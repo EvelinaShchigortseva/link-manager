@@ -25,7 +25,7 @@ export function Sidebar() {
                 <ListItemText primary='Список для чтения' />
             </ListItemButton>
 
-            <ListItemButton component="a" href="#simple-list">
+            <ListItemButton component="a" href="#simple-list" >
                 <ListItemText primary='Корзина' />
             </ListItemButton>
 

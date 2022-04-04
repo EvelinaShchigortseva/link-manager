@@ -1,4 +1,4 @@
-import Header from "./components/header/Header";
+import Header from "./components/Header/Header";
 import {Sidebar} from "./components/sidebar/sidebar";
 import './style.css'
 import Content from "./components/content/content";
