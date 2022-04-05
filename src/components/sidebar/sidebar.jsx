@@ -15,9 +15,6 @@ export function Sidebar() {
     const groups =  useSelector(state => state.listGroups.listGroups)
 
     const addGroup = () => {
-        // setGroups(prevValue => [...prevValue, group])
-        // setGroup('')
-        // console.log('group-', group, 'groups-', groups, typeof groups)
         dispatch(addGroupAction(group))
         setGroup('')
 
@@ -32,10 +29,6 @@ export function Sidebar() {
                     <AddIcon fontSize="inherit" />
                 </IconButton>
             </div>
-            {/*<ListSubheader component="div" id="nested-list-subheader">*/}
-            {/*    Добавить группу*/}
-
-            {/*</ListSubheader>*/}
 
             {groups.map(group=>
                 <ListItemButton component="a" href="#simple-list">
