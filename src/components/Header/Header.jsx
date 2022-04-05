@@ -1,16 +1,17 @@
 import React from "react";
 import Search from "./Search/Search";
 import "./Header.css";
-import BasicModal from "../modal/AddLink";
+
 import LogIn from "../LogIn/LogIn";
+import AddLinkModal from "../modal/AddLinkModal/AddLinkModal";
 
 function Header() {
     return (
         <div className="header">
             <div className="header-top">
-                <div>LinkManager</div>
+                <div className='title'>LinkManager</div>
                 <Search />
-                <BasicModal />
+                <AddLinkModal/>
                 <LogIn />
             </div>
         </div>

@@ -1,17 +1,41 @@
-import {useState} from "react";
-
-import {Divider, ListItemButton, ListItemText, ListSubheader} from "@mui/material";
+import React, {useState} from "react";
+import {Divider, ListItemButton, ListItemText} from "@mui/material";
+import AddIcon from '@mui/icons-material/Add';
+import IconButton from "@mui/material/IconButton";
+import TextField from "@mui/material/TextField";
+import {useDispatch, useSelector} from "react-redux";
 import "./sidebar.css"
+import {addGroupAction} from "../../store/listGroupsReducer";
 
 export function Sidebar() {
-    const [groups, setGroups] = useState(['Один','Два'])
+    // const [groups, setGroups] = useState([])
+    const [group, setGroup] = useState('')
+
+    const dispatch = useDispatch()
+    const groups =  useSelector(state => state.listGroups.listGroups)
+
+    const addGroup = () => {
+        // setGroups(prevValue => [...prevValue, group])
+        // setGroup('')
+        // console.log('group-', group, 'groups-', groups, typeof groups)
+        dispatch(addGroupAction(group))
+        setGroup('')
+
+    }
+
+
 
     return(
         <div className='sidebar'>
+            <div className='row'>  <TextField id="standard-basic"  label='Добавить группу' size="small" variant="standard" onChange={(e) => {setGroup(e.target.value)}} value={group} />
+                <IconButton  aria-label="delete" size="small" onClick={addGroup}>
+                    <AddIcon fontSize="inherit" />
+                </IconButton>
+            </div>
+            {/*<ListSubheader component="div" id="nested-list-subheader">*/}
+            {/*    Добавить группу*/}
 
-            <ListSubheader component="div" id="nested-list-subheader">
-                Добавить закладку +
-            </ListSubheader>
+            {/*</ListSubheader>*/}
 
             {groups.map(group=>
                 <ListItemButton component="a" href="#simple-list">

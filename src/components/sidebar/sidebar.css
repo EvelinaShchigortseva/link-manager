@@ -2,3 +2,16 @@
    min-width: 15%;
    margin-top: 7px;
 }
+
+.MuiTextField-root{
+}
+
+.MuiTextField-root{
+   padding: 0;
+}
+
+.row{
+   display: flex;
+   justify-content: space-between;
+   padding: 10px;
+}
