@@ -46,6 +46,7 @@ export default function AddLinkModal() {
     };
 
     const [bookmark,setBookmark] = useState({
+            id: Date.now(),
             nameLink: '',
             url: '',
             descriptionLink: '',
@@ -54,10 +55,13 @@ export default function AddLinkModal() {
 
     const handleSubmit = () => {
         dispatch(addLinkAction(bookmark))
-        setBookmark( {nameLink: '',
+        setBookmark({
+            nameLink: '',
             url: '',
             descriptionLink: '',
-            currentGroup:'',})
+            currentGroup: '',
+        })
+        setIsOpen((prevState) => !prevState)
     }
     return (
         <div>
