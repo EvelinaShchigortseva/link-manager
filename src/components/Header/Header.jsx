@@ -1,19 +1,17 @@
 import React from "react";
 import Search from "./Search/Search";
 import "./Header.css";
-import AddLink from "./AddLink/AddLink";
+import BasicModal from "../modal/AddLink";
+import LogIn from "../LogIn/LogIn";
 
 function Header() {
     return (
         <div className="header">
             <div className="header-top">
+                <div>LinkManager</div>
                 <Search />
-                <AddLink />
-            </div>
-            <div className="header-top">
-                <span>Все закладки</span>
-                <span>Сортировка</span>
-                <span>Вид</span>
+                <BasicModal />
+                <LogIn />
             </div>
         </div>
     );
