@@ -1,13 +1,14 @@
-import React from 'react';
+import React from "react";
+import { useSelector } from "react-redux";
 import ItemLinks from "./itemLinks/itemLinks";
 
 const ListLinks = () => {
-    const groups = [1,2,3]
+    const groups = useSelector((state) => state.listLinks.links);
     return (
         <div>
-            {
-                groups.map(group => <ItemLinks/>)
-            }
+            {groups.map((i) => (
+                <ItemLinks key={i.id} nameLink={i.nameLink} link={i.url} description={i.description} />
+            ))}
         </div>
     );
 };

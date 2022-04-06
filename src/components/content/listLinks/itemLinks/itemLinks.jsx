@@ -5,20 +5,20 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import "./itemLinks.css";
 import EditModal from "../../../modal/EditModal/EditModal";
 
-const ItemLinks = () => {
+const ItemLinks = ({ nameLink, link, description }) => {
     return (
         <div>
             <Card sx={{ minWidth: 275, marginBottom: "10px", backgroundColor: "#e6e8e8" }}>
                 <CardContent sx={{ display: "flex", justifyContent: "space-between" }}>
                     <div>
-                        <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
-                            имя ссылки
+                        <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom value={{ nameLink }}>
+                            {nameLink}
                         </Typography>
 
-                        <Typography variant="body2">ссылка</Typography>
+                        <Typography variant="body2">{link}</Typography>
 
                         <Typography sx={{ mb: 1.5 }} color="text.secondary">
-                            описание
+                            {description}
                         </Typography>
                     </div>
 
