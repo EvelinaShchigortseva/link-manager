@@ -20,14 +20,23 @@ import {useState} from "react";
 
 
 export default function AddLinkModal() {
+    let select
+
+    const [bookmark, setBookmark] = useState({
+        id: Date.now(),
+        nameLink: '',
+        url: '',
+        descriptionLink: '',
+        currentGroup: '',
+    })
 
     const [isOpen, setIsOpen] = React.useState(false);
 
     const dispatch = useDispatch()
 
-    const groups =  useSelector(state => state.listGroups.listGroups)
+    const groups = useSelector(state => state.listGroups.listGroups)
 
-    const [checked, setChecked] = React.useState(true);
+    const [checked, setChecked] = React.useState(false);
 
     const handleChange = (event: SelectChangeEvent) => {
 
@@ -36,25 +45,42 @@ export default function AddLinkModal() {
 
     };
 
+
     const handleOpen = () => setIsOpen((prevState) => !prevState);
 
 
     const handleChangeCheckbox = (event: React.ChangeEvent<HTMLInputElement>) => {
         setChecked(event.target.checked);
-        console.log()
-
     };
 
-    const [bookmark,setBookmark] = useState({
-            id: Date.now(),
-            nameLink: '',
-            url: '',
-            descriptionLink: '',
-            currentGroup:'',
-    })
 
-    const handleSubmit = () => {
+    if (!checked) {
+        select =
+            <FormControl fullWidth margin="normal">
+                <InputLabel id="demo-simple-select-label">Group</InputLabel>
+                <Select
+                    labelId="demo-simple-select-label"
+                    id="demo-simple-select"
+                    value={bookmark.currentGroup}
+                    onChange={handleChange}
+                >
+                    {groups.map((group) => (
+                        <MenuItem value={group}>{group}</MenuItem>
+                    ))}
+                </Select>
+            </FormControl>
+    } else {
+        select = <div>Список для чтения</div>
+    }
+
+    const handleSubmit = (e) => {
+        e.preventDefault()
+        if (checked) {
+            setBookmark({...bookmark, currentGroup: 'Список для чтения'})
+        }
+
         dispatch(addLinkAction(bookmark))
+
         setBookmark({
             nameLink: '',
             url: '',
@@ -66,45 +92,39 @@ export default function AddLinkModal() {
     return (
         <div>
             <Stack direction="row" spacing={2}>
-                <Button  variant="outlined" sx={{ width: 300 }} startIcon={<StarOutlinedIcon />} onClick={handleOpen}>
+                <Button variant="outlined" sx={{width: 300}} startIcon={<StarOutlinedIcon/>} onClick={handleOpen}>
                     Добавить ссылку
                 </Button>
             </Stack>
 
-            <Dialog sx={{height:'700px'}} open={isOpen} onClose={handleOpen} >
+            <Dialog sx={{height: '700px'}} open={isOpen} onClose={handleOpen}>
                 <DialogTitle>Добавить ссылку</DialogTitle>
                 <DialogContent>
                     <form className="form" onSubmit={handleSubmit}>
-                        <TextField label="Название ссылки" onChange={(e) => {setBookmark({...bookmark, nameLink: e.target.value})} }/>
-                        <TextField label="Url" onChange={(e) => {setBookmark({...bookmark, url: e.target.value})} }/>
-                        <TextField label="Описание" onChange={(e) => {setBookmark({...bookmark, descriptionLink: e.target.value})} } />
+                        <TextField label="Название ссылки" onChange={(e) => {
+                            setBookmark({...bookmark, nameLink: e.target.value})
+                        }}/>
+                        <TextField label="Url" onChange={(e) => {
+                            setBookmark({...bookmark, url: e.target.value})
+                        }}/>
+                        <TextField label="Описание" onChange={(e) => {
+                            setBookmark({...bookmark, descriptionLink: e.target.value})
+                        }}/>
 
-                        <FormControl fullWidth margin="normal">
-                            <InputLabel id="demo-simple-select-label">Group</InputLabel>
-                            <Select
-                                labelId="demo-simple-select-label"
-                                id="demo-simple-select"
-                                value={bookmark.currentGroup}
-                                onChange={handleChange}
-                            >
-                                {groups.map((group) => (
-                                    <MenuItem value={group}>{group}</MenuItem>
-                                ))}
-                            </Select>
-                        </FormControl>
+                        {select}
 
                         <FormControlLabel
                             control={
-                                <Checkbox checked={checked} onChange={handleChangeCheckbox}  />
+                                <Checkbox checked={checked} onChange={handleChangeCheckbox}/>
                             }
                             label="Список для чтения"
                         />
 
                         <DialogActions>
-                            <Button disabled={false} type="submit" color="inherit" sx={{ backgroundColor: "#e6e8e8" }}>
+                            <Button disabled={false} type="submit" color="inherit" sx={{backgroundColor: "#e6e8e8"}}>
                                 Добавить ссылку
                             </Button>
-                            <Button color="inherit" sx={{ backgroundColor: "#e6e8e8" }} onClick={handleOpen}>
+                            <Button color="inherit" sx={{backgroundColor: "#e6e8e8"}} onClick={handleOpen}>
                                 Закрыть
                             </Button>
 
