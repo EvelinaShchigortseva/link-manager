@@ -12,6 +12,7 @@ const ADD_LINK = 'ADD-LINK'
 const UPDATE_SET_LINK = 'UPDATE-SET-LINK'
 const UPDATE_SET_URL = 'UPDATE-SET-URL'
 const UPDATE_SET_DESCRIPTION = 'UPDATE-SET-DESCRIPTION'
+const REMOVE_LINK = 'REMOVE-LINK'
 
 
 const defaultValue = {
@@ -50,6 +51,13 @@ export const listLinksReducer = (state = defaultValue, action) => {
             return {...state, url: action.newUrl }
         case UPDATE_SET_DESCRIPTION:
             return {...state, description: action.newDescription }
+        case REMOVE_LINK:
+            // debugger
+            console.log(action.id)
+            return {...state,
+                links: state.links.filter((item) => item.id !== action.id)
+            }
+
             // case changeLink:
             // const linkList = [...state.listLinks ]
             // const link = linkList.find(link => {
@@ -80,6 +88,10 @@ export const updateUrlActionCreator = (url) => ({
 export const updateDescriptionActionCreator = (description) => ({
     type: UPDATE_SET_DESCRIPTION,
     newDescription: description,
+})
+export const removeLinkActionCreator = (id) => ({
+    type: REMOVE_LINK,
+    id: id,
 })
 
 

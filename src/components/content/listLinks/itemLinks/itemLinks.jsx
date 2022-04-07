@@ -4,14 +4,21 @@ import IconButton from "@mui/material/IconButton";
 import DeleteIcon from "@mui/icons-material/Delete";
 import "./itemLinks.css";
 import EditModal from "../../../modal/EditModal/EditModal";
+import { removeLinkActionCreator } from "../../../../store/listLinksReducer";
+import { useDispatch } from "react-redux";
 
-const ItemLinks = ({ nameLink, link, description }) => {
+const ItemLinks = ({ id, nameLink, link, description }) => {
+    const dispatch = useDispatch();
+    const onRemoveLink = (id) => {
+        dispatch(removeLinkActionCreator(id));
+    };
+
     return (
         <div>
             <Card sx={{ minWidth: 275, marginBottom: "10px", backgroundColor: "#e6e8e8" }}>
                 <CardContent sx={{ display: "flex", justifyContent: "space-between" }}>
                     <div>
-                        <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom value={{ nameLink }}>
+                        <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom value={nameLink}>
                             {nameLink}
                         </Typography>
 
@@ -24,7 +31,7 @@ const ItemLinks = ({ nameLink, link, description }) => {
 
                     <CardActions sx={{ p: 0, alignItems: "flex-start" }}>
                         <EditModal />
-                        <IconButton type="submit" sx={{ p: "8px" }} aria-label="search">
+                        <IconButton type="submit" sx={{ p: "8px" }} onClick={() => onRemoveLink(id)}>
                             <DeleteIcon />
                         </IconButton>
                     </CardActions>

@@ -7,7 +7,7 @@ const ListLinks = () => {
     return (
         <div>
             {groups.map((i) => (
-                <ItemLinks key={i.id} nameLink={i.nameLink} link={i.url} description={i.description} />
+                <ItemLinks key={i.id} id={i.id} nameLink={i.nameLink} link={i.url} description={i.description} />
             ))}
         </div>
     );
