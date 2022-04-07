@@ -8,7 +8,6 @@ import {
     InputLabel,
     MenuItem,
     Select,
-    SelectChangeEvent,
     TextField,
 } from "@mui/material";
 import DialogTitle from "@mui/material/DialogTitle";
@@ -16,79 +15,62 @@ import DialogActions from "@mui/material/DialogActions";
 import './AddLinkModal.css'
 import {useDispatch, useSelector} from "react-redux";
 import {addLinkAction} from "../../../store/listLinksReducer";
+import {getListGroups} from "../../../store/listGroupsReducer";
 import {useState} from "react";
 
+const INITIAL_STATE = {
+    id: null,
+    nameLink: '',
+    url: '',
+    descriptionLink: '',
+    currentGroup: '',
+};
 
 export default function AddLinkModal() {
-    let select
-
-    const [bookmark, setBookmark] = useState({
-        id: Date.now(),
-        nameLink: '',
-        url: '',
-        descriptionLink: '',
-        currentGroup: '',
-    })
+    const [bookmark, setBookmark] = useState(INITIAL_STATE)
+    const [checked, setChecked] = React.useState(false);
 
     const [isOpen, setIsOpen] = React.useState(false);
 
     const dispatch = useDispatch()
 
-    const groups = useSelector(state => state.listGroups.listGroups)
+    const groups = useSelector(getListGroups)
 
-    const [checked, setChecked] = React.useState(false);
 
-    const handleChange = (event: SelectChangeEvent) => {
-
-        setBookmark({...bookmark, currentGroup: event.target.value})
+    const handleGroupChange = (event) => {
+        setBookmark(prevState => ({...prevState, currentGroup: event.target.value}))
         console.log(bookmark)
-
     };
-
 
     const handleOpen = () => setIsOpen((prevState) => !prevState);
 
 
-    const handleChangeCheckbox = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const handleChangeCheckbox = (event) => {
         setChecked(event.target.checked);
     };
 
 
-    if (!checked) {
-        select =
-            <FormControl fullWidth margin="normal">
-                <InputLabel id="demo-simple-select-label">Group</InputLabel>
-                <Select
-                    labelId="demo-simple-select-label"
-                    id="demo-simple-select"
-                    value={bookmark.currentGroup}
-                    onChange={handleChange}
-                >
-                    {groups.map((group) => (
-                        <MenuItem value={group}>{group}</MenuItem>
-                    ))}
-                </Select>
-            </FormControl>
-    } else {
-        select = <div>Список для чтения</div>
-    }
-
+    //
+    // const preparationData=()=>{
+    //     if (checked) {
+    //         // setList((prevValue) => [...prevValue, task]);
+    //         return setBookmark((state)=>{return{...state, currentGroup: 'Список для чтения'}})
+    //
+    //     }
+    // }
     const handleSubmit = (e) => {
         e.preventDefault()
-        if (checked) {
-            setBookmark({...bookmark, currentGroup: 'Список для чтения'})
+//здесь была проверка checked и присваивание id, но в итоге сначала нрданные передались в redux-store,
+        const payload = {
+            ...bookmark,
+            currentGroup: checked ? 'Список для чтения' : bookmark.currentGroup,
+            id: Date.now()
         }
-
-        dispatch(addLinkAction(bookmark))
-
-        setBookmark({
-            nameLink: '',
-            url: '',
-            descriptionLink: '',
-            currentGroup: '',
-        })
+        dispatch(addLinkAction((payload)))
+        setBookmark(INITIAL_STATE)
         setIsOpen((prevState) => !prevState)
     }
+    console.log(bookmark)
     return (
         <div>
             <Stack direction="row" spacing={2}>
@@ -110,8 +92,21 @@ export default function AddLinkModal() {
                         <TextField label="Описание" onChange={(e) => {
                             setBookmark({...bookmark, descriptionLink: e.target.value})
                         }}/>
-
-                        {select}
+                        {checked ? <div>Список для чтения</div> :
+                            <FormControl fullWidth margin="normal">
+                                <InputLabel id="demo-simple-select-label">Group</InputLabel>
+                                <Select
+                                    labelId="demo-simple-select-label"
+                                    id="demo-simple-select"
+                                    value={bookmark.currentGroup}
+                                    onChange={handleGroupChange}
+                                >
+                                    {groups.map((group) => (
+                                        <MenuItem value={group}>{group}</MenuItem>
+                                    ))}
+                                </Select>
+                            </FormControl>
+                        }
 
                         <FormControlLabel
                             control={

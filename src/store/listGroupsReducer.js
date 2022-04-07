@@ -4,6 +4,8 @@ const defaultValue = {
 
 const addGroup = 'addGroup'
 
+export const getListGroups = state => state.listGroups.listGroups;
+
 export const listGroupsReducer = (state = defaultValue, action) => {
     switch (action.type) {
         case addGroup:

@@ -11,6 +11,15 @@ export const listLinksReducer = (state = defaultValue, action) => {
         case addLink:
             return {...state, listLinks: [...state.listLinks, action.payload]}
         case changeLink:
+            const updatedList = state.listLinks.map(linkItem => {
+                if (action.payload.id === linkItem.id) {
+                    return {...action.payload}
+                }
+
+                return linkItem;
+            })
+            
+            return {...state, listLinks: updatedList}
             // const linkList = [...state.listLinks ]
             // const link = linkList.find(link => {
             //     if(link.id === action.payload.id) {
@@ -32,7 +41,7 @@ export const addLinkAction = (payload) => (
 
 
 export const changeLinkAction = (payload) => (
-    {type: addLink, payload})
+    {type: changeLink, payload})
 
 
 // object = {

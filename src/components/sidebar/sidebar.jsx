@@ -21,7 +21,6 @@ export function Sidebar() {
     }
 
 
-
     return(
         <div className='sidebar'>
             <div className='row'>  <TextField id="standard-basic"  label='Добавить группу' size="small" variant="standard" onChange={(e) => {setGroup(e.target.value)}} value={group} />
