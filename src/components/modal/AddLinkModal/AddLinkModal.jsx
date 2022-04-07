@@ -1,6 +1,5 @@
 import * as React from "react";
-import {Button, Dialog, DialogContent, Stack} from "@mui/material";
-import StarOutlinedIcon from "@mui/icons-material/StarOutlined";
+import {Button, Dialog, DialogContent} from "@mui/material";
 import {
     Checkbox,
     FormControl,
@@ -16,38 +15,33 @@ import DialogActions from "@mui/material/DialogActions";
 import './AddLinkModal.css'
 import {useDispatch, useSelector} from "react-redux";
 import {addLinkAction} from "../../../store/listLinksReducer";
-import {useState} from "react";
 
 
-export default function AddLinkModal() {
+export default function AddLinkModal({isOpen, handleOpen}) {
     let select
 
-    const [bookmark, setBookmark] = useState({
+    const [bookmark, setBookmark] = React.useState({
         id: Date.now(),
         nameLink: '',
         url: '',
         descriptionLink: '',
         currentGroup: '',
     })
+    const [checked, setChecked] = React.useState(false);
 
-    const [isOpen, setIsOpen] = React.useState(false);
+    // const [isOpen, setIsOpen] = React.useState(false);
 
     const dispatch = useDispatch()
 
     const groups = useSelector(state => state.listGroups.listGroups)
 
-    const [checked, setChecked] = React.useState(false);
-
+    
     const handleChange = (event: SelectChangeEvent) => {
-
         setBookmark({...bookmark, currentGroup: event.target.value})
         console.log(bookmark)
-
     };
 
-
-    const handleOpen = () => setIsOpen((prevState) => !prevState);
-
+    // const handleOpen = () => setIsOpen((prevState) => !prevState);
 
     const handleChangeCheckbox = (event: React.ChangeEvent<HTMLInputElement>) => {
         setChecked(event.target.checked);
@@ -82,21 +76,16 @@ export default function AddLinkModal() {
         dispatch(addLinkAction(bookmark))
 
         setBookmark({
+            id: Date.now(),
             nameLink: '',
             url: '',
             descriptionLink: '',
             currentGroup: '',
         })
-        setIsOpen((prevState) => !prevState)
+        handleOpen()
     }
     return (
         <div>
-            <Stack direction="row" spacing={2}>
-                <Button variant="outlined" sx={{width: 300}} startIcon={<StarOutlinedIcon/>} onClick={handleOpen}>
-                    Добавить ссылку
-                </Button>
-            </Stack>
-
             <Dialog sx={{height: '700px'}} open={isOpen} onClose={handleOpen}>
                 <DialogTitle>Добавить ссылку</DialogTitle>
                 <DialogContent>

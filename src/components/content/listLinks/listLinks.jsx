@@ -1,15 +1,18 @@
-import React from 'react';
-import ItemLinks from "./itemLinks/itemLinks";
+import React from 'react'
+import {useSelector} from 'react-redux'
+import ItemLinks from './itemLinks/itemLinks'
 
 const ListLinks = () => {
-    const groups = [1,2,3]
+    const groups = useSelector((state) => state.listLinks.listLinks)
     return (
-        <div>
-            {
-                groups.map(group => <ItemLinks/>)
-            }
-        </div>
-    );
-};
+        groups && (
+            <div>
+                {groups.map((i) => (
+                    <ItemLinks key={i.id} id={i.id} nameLink={i.nameLink} link={i.url} description={i.descriptionLink} />
+                ))}
+            </div>
+        )
+    )
+}
 
-export default ListLinks;
+export default ListLinks
