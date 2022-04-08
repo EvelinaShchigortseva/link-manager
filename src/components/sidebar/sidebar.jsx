@@ -44,7 +44,12 @@ export function Sidebar() {
       ))}
 
       <Divider />
+      <ListItemButton component="a">
+        <ListItemText primary="Все закладки" />
+      </ListItemButton>
 
+      <Divider />
+      
       <ListItemButton component="a">
         <ListItemText primary="Список для чтения" />
       </ListItemButton>
