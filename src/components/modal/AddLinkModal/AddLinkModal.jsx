@@ -63,15 +63,6 @@ export default function AddLinkModal({ isOpen, handleOpen }) {
 
   return (
     <div>
-      {/* <Stack direction="row" spacing={2}>
-        <Button
-          variant="outlined"
-          sx={{ width: 300 }}
-          startIcon={<StarOutlinedIcon />}
-          onClick={handleOpen} >
-          Добавить ссылку
-        </Button>
-      </Stack> */}
 
       <Dialog sx={{ height: "700px" }} open={isOpen} onClose={handleOpen}>
         <DialogTitle>Добавить ссылку</DialogTitle>
