@@ -3,7 +3,7 @@ import IconButton from "@mui/material/IconButton";
 import EditIcon from "@mui/icons-material/Edit";
 import EditModal from "../../../../modal/EditModal/EditModal";
 
-function EditLinkButton({ id }) {
+function EditLinkButton({ id, nameLink, link, description, currentGroup }) {
   const [isOpen, setIsOpen] = React.useState(false);
   const handleOpenModal = () => setIsOpen((prevState) => !prevState);
 
@@ -17,7 +17,7 @@ function EditLinkButton({ id }) {
       >
         <EditIcon color="primary" />
       </IconButton>
-      <EditModal id={id} isOpen={isOpen} handleOpenModal={handleOpenModal} />
+      <EditModal id = {id} nameLink = {nameLink} link = {link} description = {description} isOpen={isOpen} handleOpenModal={handleOpenModal} currentGroup={currentGroup} />
     </div>
   );
 }

@@ -14,6 +14,7 @@ const ListLinks = () => {
             nameLink={i.nameLink}
             link={i.url}
             description={i.descriptionLink}
+            currentGroup={i.currentGroup}
           />
         ))}
       </div>

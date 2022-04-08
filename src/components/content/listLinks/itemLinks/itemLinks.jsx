@@ -1,5 +1,11 @@
 import React from "react";
-import { Card, CardActions, CardContent, Typography } from "@mui/material";
+import {
+  Card,
+  CardActions,
+  CardContent,
+  Typography,
+  Link,
+} from "@mui/material";
 import IconButton from "@mui/material/IconButton";
 import DeleteIcon from "@mui/icons-material/Delete";
 import "./itemLinks.css";
@@ -7,7 +13,7 @@ import { deleteLinkAction } from "../../../../store/listLinksReducer";
 import { useDispatch } from "react-redux";
 import EditLinkButton from "./EditLinkButton/EditLinkButton";
 
-const ItemLinks = ({ id, nameLink, link, description }) => {
+const ItemLinks = ({ id, nameLink, link, description, currentGroup }) => {
   const dispatch = useDispatch();
   const onRemoveLink = (id) => {
     dispatch(deleteLinkAction(id));
@@ -29,7 +35,11 @@ const ItemLinks = ({ id, nameLink, link, description }) => {
               {nameLink}
             </Typography>
 
-            <Typography variant="body2">{link}</Typography>
+            <Typography variant="body2">
+              <Link href={link} underline="always">
+                {link}
+              </Link>
+            </Typography>
 
             <Typography sx={{ mb: 1.5 }} color="text.secondary">
               {description}
@@ -37,7 +47,7 @@ const ItemLinks = ({ id, nameLink, link, description }) => {
           </div>
 
           <CardActions sx={{ p: 0, alignItems: "flex-start" }}>
-            <EditLinkButton id={id} />
+            <EditLinkButton id = {id} nameLink = {nameLink} link = {link} description = {description} currentGroup = {currentGroup}/>
             <IconButton
               type="submit"
               sx={{ p: "8px" }}
