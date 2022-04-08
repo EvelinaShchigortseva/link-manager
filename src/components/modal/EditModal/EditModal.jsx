@@ -15,7 +15,7 @@ function EditModal({id, isOpen, handleOpenModal}) {
                 <DialogContent>
                     <form className="form" onSubmit={() => {}}>
                         <TextField label="Имя" onChange={() => {}} />
-                        <TextField label="Url" onChange={() => {}} value="" />
+                        <TextField label="Url" onChange={() => {}} value="url" />
                         <TextField label="Описание" onChange={() => {}} multiline minRows={2} />
 
                         <DialogActions>
