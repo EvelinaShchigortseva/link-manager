@@ -10,16 +10,14 @@ import {useState} from 'react'
 import {useDispatch} from 'react-redux'
 import {changeLinkAction} from '../../../store/listLinksReducer'
 
-function EditModal({id, nameLink, link, description, isOpen, handleOpenModal, currentGroup}) {
+function EditModal({link, isOpen, handleOpenModal}) {
     const INITIAL_STATE = {
-        id: id,
-        nameLink: nameLink,
-        url: link,
-        descriptionLink: description,
-        currentGroup: currentGroup,
+        id: link.id,
+        nameLink: link.nameLink,
+        url: link.url,
+        descriptionLink: link.descriptionLink,
+        currentGroup: link.currentGroup,
     }
-
-    console.log(INITIAL_STATE)
 
     const [bookmark, setBookmark] = useState(INITIAL_STATE)
 

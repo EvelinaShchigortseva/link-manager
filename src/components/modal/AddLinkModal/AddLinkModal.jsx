@@ -1,24 +1,25 @@
 import * as React from 'react'
-import {Button, Dialog, DialogContent, Stack} from '@mui/material'
-import StarOutlinedIcon from '@mui/icons-material/StarOutlined'
+import {Button, Dialog, DialogContent} from '@mui/material'
 import {Checkbox, FormControl, FormControlLabel, InputLabel, MenuItem, Select, SelectChangeEvent, TextField} from '@mui/material'
 import DialogTitle from '@mui/material/DialogTitle'
 import DialogActions from '@mui/material/DialogActions'
 import './AddLinkModal.css'
 import {useDispatch, useSelector} from 'react-redux'
 import {addLinkAction} from '../../../store/listLinksReducer'
-import {useState} from 'react'
+import {useForm} from './useForm'
+
+const initialValue = {
+    id: Date.now(),
+    nameLink: '',
+    url: '',
+    descriptionLink: '',
+    currentGroup: '',
+}
 
 export default function AddLinkModal({isOpen, handleOpen}) {
     let select
 
-    const [bookmark, setBookmark] = useState({
-        id: Date.now(),
-        nameLink: '',
-        url: '',
-        descriptionLink: '',
-        currentGroup: '',
-    })
+    const {bookmark, setBookmark, validate, error, setError} = useForm(initialValue)
 
     const dispatch = useDispatch()
 
@@ -38,15 +39,12 @@ export default function AddLinkModal({isOpen, handleOpen}) {
     if (!checked) {
         select = (
             <FormControl fullWidth margin="normal">
-                <InputLabel id="demo-simple-select-label">Group</InputLabel>
-                <Select
-                    labelId="demo-simple-select-label"
-                    id="demo-simple-select"
-                    value={bookmark.currentGroup}
-                    onChange={handleChange}
-                >
+                <InputLabel>Group</InputLabel>
+                <Select value={bookmark.currentGroup} onChange={handleChange}>
                     {groups.map((group) => (
-                        <MenuItem value={group}>{group}</MenuItem>
+                        <MenuItem key={group.id} value={group.group}>
+                            {group.group}
+                        </MenuItem>
                     ))}
                 </Select>
             </FormControl>
@@ -57,23 +55,26 @@ export default function AddLinkModal({isOpen, handleOpen}) {
 
     const handleSubmit = (e) => {
         e.preventDefault()
+
+        if (validate()) {
+            dispatch(addLinkAction(bookmark))
+            handleOpen()
+            setBookmark(initialValue)
+        }
         if (checked) {
             setBookmark({...bookmark, currentGroup: 'Список для чтения'})
         }
-
-        dispatch(addLinkAction(bookmark))
-
-        setBookmark({
-            nameLink: '',
-            url: '',
-            descriptionLink: '',
-            currentGroup: '',
-        })
-        handleOpen()
     }
+
+    const closedModal = () => {
+        handleOpen()
+        setError({})
+        setBookmark(initialValue)
+    }
+
     return (
         <div>
-            <Dialog sx={{height: '700px'}} open={isOpen} onClose={handleOpen}>
+            <Dialog sx={{height: '700px'}} open={isOpen} onClose={closedModal}>
                 <DialogTitle>Добавить ссылку</DialogTitle>
                 <DialogContent>
                     <form className="form" onSubmit={handleSubmit}>
@@ -82,18 +83,21 @@ export default function AddLinkModal({isOpen, handleOpen}) {
                             onChange={(e) => {
                                 setBookmark({...bookmark, nameLink: e.target.value})
                             }}
+                            {...(error.nameLink && {error: true, helperText: error.nameLink})}
                         />
                         <TextField
                             label="Url"
                             onChange={(e) => {
                                 setBookmark({...bookmark, url: e.target.value})
                             }}
+                            {...(error.url && {error: true, helperText: error.url})}
                         />
                         <TextField
                             label="Описание"
                             onChange={(e) => {
                                 setBookmark({...bookmark, descriptionLink: e.target.value})
                             }}
+                            {...(error.descriptionLink && {error: true, helperText: error.descriptionLink})}
                         />
 
                         {select}
@@ -107,7 +111,7 @@ export default function AddLinkModal({isOpen, handleOpen}) {
                             <Button disabled={false} type="submit" color="inherit" sx={{backgroundColor: '#e6e8e8'}}>
                                 Добавить ссылку
                             </Button>
-                            <Button color="inherit" sx={{backgroundColor: '#e6e8e8'}} onClick={handleOpen}>
+                            <Button color="inherit" sx={{backgroundColor: '#e6e8e8'}} onClick={closedModal}>
                                 Закрыть
                             </Button>
                         </DialogActions>

@@ -7,7 +7,7 @@ import {deleteLinkAction} from '../../../../store/listLinksReducer'
 import {useDispatch} from 'react-redux'
 import EditLinkButton from './EditLinkButton/EditLinkButton'
 
-const ItemLinks = ({id, nameLink, link, description, currentGroup}) => {
+const ItemLinks = ({link}) => {
     const dispatch = useDispatch()
     const onRemoveLink = (id) => {
         dispatch(deleteLinkAction(id))
@@ -18,30 +18,24 @@ const ItemLinks = ({id, nameLink, link, description, currentGroup}) => {
             <Card sx={{minWidth: 275, marginBottom: '10px', backgroundColor: '#e6e8e8'}}>
                 <CardContent sx={{display: 'flex', justifyContent: 'space-between'}}>
                     <div>
-                        <Typography sx={{fontSize: 14}} color="text.secondary" gutterBottom value={nameLink}>
-                            {nameLink}
+                        <Typography sx={{fontSize: 14}} color="text.secondary" gutterBottom value={link.nameLink}>
+                            {link.nameLink}
                         </Typography>
 
                         <Typography variant="body2">
-                            <Link href={link} underline="always">
-                                {link}
+                            <Link href={link.url} underline="always">
+                                {link.url}
                             </Link>
                         </Typography>
 
                         <Typography sx={{mb: 1.5}} color="text.secondary">
-                            {description}
+                            {link.descriptionLink}
                         </Typography>
                     </div>
 
                     <CardActions sx={{p: 0, alignItems: 'flex-start'}}>
-                        <EditLinkButton
-                            id={id}
-                            nameLink={nameLink}
-                            link={link}
-                            description={description}
-                            currentGroup={currentGroup}
-                        />
-                        <IconButton type="submit" sx={{p: '8px'}} onClick={() => onRemoveLink(id)}>
+                        <EditLinkButton link={link} />
+                        <IconButton type="submit" sx={{p: '8px'}} onClick={() => onRemoveLink(link.id)}>
                             <DeleteIcon />
                         </IconButton>
                     </CardActions>

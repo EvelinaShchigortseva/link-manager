@@ -38,8 +38,8 @@ export function Sidebar() {
             </div>
 
             {groups.map((group) => (
-                <ListItemButton component="a">
-                    <ListItemText primary={group} />
+                <ListItemButton key={group.id} component="a">
+                    <ListItemText primary={group.group} />
                 </ListItemButton>
             ))}
 

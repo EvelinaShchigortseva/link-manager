@@ -8,14 +8,7 @@ const ListLinks = () => {
         groups && (
             <div>
                 {groups.map((i) => (
-                    <ItemLinks
-                        key={i.id}
-                        id={i.id}
-                        nameLink={i.nameLink}
-                        link={i.url}
-                        description={i.descriptionLink}
-                        currentGroup={i.currentGroup}
-                    />
+                    <ItemLinks key={i.id} link={i} />
                 ))}
             </div>
         )
