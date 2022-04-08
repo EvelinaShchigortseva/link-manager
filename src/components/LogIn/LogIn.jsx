@@ -1,22 +1,17 @@
-import React from "react";
-import AccountCircleIcon from "@mui/icons-material/AccountCircle";
-import { Button, Stack } from "@mui/material";
+import React from 'react'
+import AccountCircleIcon from '@mui/icons-material/AccountCircle'
+import {Button, Stack} from '@mui/material'
 
 function LogIn() {
-  return (
-    <div>
-      <Stack direction="row" spacing={2}>
-        <Button
-          color="inherit"
-          variant="contained"
-          sx={{ width: "auto" }}
-          startIcon={<AccountCircleIcon />}
-        >
-          Логин
-        </Button>
-      </Stack>
-    </div>
-  );
+    return (
+        <div>
+            <Stack direction="row" spacing={2}>
+                <Button color="inherit" variant="contained" sx={{width: 'auto'}} startIcon={<AccountCircleIcon />}>
+                    Логин
+                </Button>
+            </Stack>
+        </div>
+    )
 }
 
-export default LogIn;
+export default LogIn
