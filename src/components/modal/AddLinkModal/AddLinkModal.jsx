@@ -1,6 +1,5 @@
 import * as React from "react";
-import { Button, Dialog, DialogContent, Stack } from "@mui/material";
-import StarOutlinedIcon from "@mui/icons-material/StarOutlined";
+import { Button, Dialog, DialogContent } from "@mui/material";
 import {
   Checkbox,
   FormControl,
@@ -26,12 +25,11 @@ const INITIAL_STATE = {
   currentGroup: "",
 };
 
-export default function AddLinkModal() {
-
+export default function AddLinkModal({ isOpen, handleOpen }) {
   const [bookmark, setBookmark] = useState(INITIAL_STATE);
   const [checked, setChecked] = React.useState(false);
 
-  const [isOpen, setIsOpen] = React.useState(false);
+  // const [isOpen, setIsOpen] = React.useState(false);
 
   const dispatch = useDispatch();
 
@@ -44,7 +42,7 @@ export default function AddLinkModal() {
     }));
   };
 
-  const handleOpen = () => setIsOpen((prevState) => !prevState);
+  // const handleOpen = () => setIsOpen((prevState) => !prevState);
 
   const handleChangeCheckbox = (event) => {
     setChecked(event.target.checked);
@@ -60,12 +58,12 @@ export default function AddLinkModal() {
     };
     dispatch(addLinkAction(payload));
     setBookmark(INITIAL_STATE);
-    setIsOpen((prevState) => !prevState);
+    handleOpen();
   };
 
   return (
     <div>
-      <Stack direction="row" spacing={2}>
+      {/* <Stack direction="row" spacing={2}>
         <Button
           variant="outlined"
           sx={{ width: 300 }}
@@ -73,7 +71,7 @@ export default function AddLinkModal() {
           onClick={handleOpen} >
           Добавить ссылку
         </Button>
-      </Stack>
+      </Stack> */}
 
       <Dialog sx={{ height: "700px" }} open={isOpen} onClose={handleOpen}>
         <DialogTitle>Добавить ссылку</DialogTitle>
@@ -132,8 +130,9 @@ export default function AddLinkModal() {
               <Button
                 color="inherit"
                 sx={{ backgroundColor: "#e6e8e8" }}
-                onClick={handleOpen}>
-                    Закрыть
+                onClick={handleOpen}
+              >
+                Закрыть
               </Button>
             </DialogActions>
           </form>
