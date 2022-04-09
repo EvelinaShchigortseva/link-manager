@@ -1,8 +1,35 @@
 import React from 'react'
+import {FormControl, InputLabel, MenuItem, Select} from '@mui/material'
+import {getListGroups} from '../../../store/listGroupsReducer'
+import {useSelector} from 'react-redux'
 
 export function useForm(initialValue) {
     const [bookmark, setBookmark] = React.useState(initialValue)
     const [error, setError] = React.useState({})
+    const [checked, setChecked] = React.useState(false)
+    const groups = useSelector(getListGroups)
+
+    const handleGroupChange = (event) => {
+        setBookmark((prevState) => ({
+            ...prevState,
+            currentGroup: event.target.value,
+        }))
+    }
+
+    let select = !checked ? (
+        <FormControl fullWidth margin="normal">
+            <InputLabel>Group</InputLabel>
+            <Select value={bookmark.currentGroup} onChange={handleGroupChange}>
+                {groups.map((group) => (
+                    <MenuItem key={group.id} value={group.group}>
+                        {group.group}
+                    </MenuItem>
+                ))}
+            </Select>
+        </FormControl>
+    ) : (
+        <div>Список для чтения</div>
+    )
 
     const validate = () => {
         let temp = []
@@ -24,5 +51,8 @@ export function useForm(initialValue) {
         validate,
         error,
         setError,
+        select,
+        checked,
+        setChecked,
     }
 }
