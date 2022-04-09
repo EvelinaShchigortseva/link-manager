@@ -1,6 +1,6 @@
 import * as React from 'react'
 import {Button, Dialog, DialogContent} from '@mui/material'
-import {Checkbox, FormControl, FormControlLabel, InputLabel, MenuItem, Select, SelectChangeEvent, TextField} from '@mui/material'
+import {Checkbox, FormControl, FormControlLabel, InputLabel, MenuItem, Select, TextField} from '@mui/material'
 import DialogTitle from '@mui/material/DialogTitle'
 import DialogActions from '@mui/material/DialogActions'
 import './AddLinkModal.css'
@@ -8,8 +8,8 @@ import {useDispatch, useSelector} from 'react-redux'
 import {addLinkAction} from '../../../store/listLinksReducer'
 import {useForm} from './useForm'
 
-const initialValue = {
-    id: Date.now(),
+const INITIAL_STATE = {
+    id: null,
     nameLink: '',
     url: '',
     descriptionLink: '',
@@ -17,59 +17,44 @@ const initialValue = {
 }
 
 export default function AddLinkModal({isOpen, handleOpen}) {
-    let select
-
-    const {bookmark, setBookmark, validate, error, setError} = useForm(initialValue)
+    const {bookmark, setBookmark, validate, error, setError} = useForm(INITIAL_STATE)
+    const [checked, setChecked] = React.useState(false)
 
     const dispatch = useDispatch()
 
     const groups = useSelector((state) => state.listGroups.listGroups)
 
-    const [checked, setChecked] = React.useState(false)
-
-    const handleChange = (event: SelectChangeEvent) => {
-        setBookmark({...bookmark, currentGroup: event.target.value})
-        console.log(bookmark)
+    const handleGroupChange = (event) => {
+        setBookmark((prevState) => ({
+            ...prevState,
+            currentGroup: event.target.value,
+        }))
     }
 
-    const handleChangeCheckbox = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const handleChangeCheckbox = (event) => {
         setChecked(event.target.checked)
-    }
-
-    if (!checked) {
-        select = (
-            <FormControl fullWidth margin="normal">
-                <InputLabel>Group</InputLabel>
-                <Select value={bookmark.currentGroup} onChange={handleChange}>
-                    {groups.map((group) => (
-                        <MenuItem key={group.id} value={group.group}>
-                            {group.group}
-                        </MenuItem>
-                    ))}
-                </Select>
-            </FormControl>
-        )
-    } else {
-        select = <div>Список для чтения</div>
     }
 
     const handleSubmit = (e) => {
         e.preventDefault()
 
-        if (validate()) {
-            dispatch(addLinkAction(bookmark))
-            handleOpen()
-            setBookmark(initialValue)
+        const payload = {
+            ...bookmark,
+            currentGroup: checked ? 'Список для чтения' : bookmark.currentGroup,
+            id: Date.now(),
         }
-        if (checked) {
-            setBookmark({...bookmark, currentGroup: 'Список для чтения'})
+
+        if (validate()) {
+            dispatch(addLinkAction(payload))
+            handleOpen()
+            setBookmark(INITIAL_STATE)
         }
     }
 
     const closedModal = () => {
         handleOpen()
         setError({})
-        setBookmark(initialValue)
+        setBookmark(INITIAL_STATE)
     }
 
     return (
@@ -100,7 +85,20 @@ export default function AddLinkModal({isOpen, handleOpen}) {
                             {...(error.descriptionLink && {error: true, helperText: error.descriptionLink})}
                         />
 
-                        {select}
+                        {checked ? (
+                            <div>Список для чтения</div>
+                        ) : (
+                            <FormControl fullWidth margin="normal">
+                                <InputLabel>Group</InputLabel>
+                                <Select value={bookmark.currentGroup} onChange={handleGroupChange}>
+                                    {groups.map((group) => (
+                                        <MenuItem key={group.id} value={group.group}>
+                                            {group.group}
+                                        </MenuItem>
+                                    ))}
+                                </Select>
+                            </FormControl>
+                        )}
 
                         <FormControlLabel
                             control={<Checkbox checked={checked} onChange={handleChangeCheckbox} />}
