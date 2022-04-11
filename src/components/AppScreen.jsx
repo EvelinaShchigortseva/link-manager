@@ -7,6 +7,7 @@ function AppScreen() {
     return (
         <div className="App">
             <Header />
+
             <div className="main">
                 <Sidebar />
                 <Content />

@@ -3,11 +3,11 @@ import {useSelector} from 'react-redux'
 import ItemLinks from './itemLinks/itemLinks'
 
 const ListLinks = () => {
-    const groups = useSelector((state) => state.listLinks.listLinks)
+    const filterLink = useSelector(({listLinks}) => listLinks.filterLinks)
     return (
-        groups && (
+        filterLink && (
             <div>
-                {groups.map((i) => (
+                {filterLink.map((i) => (
                     <ItemLinks key={i.id} link={i} />
                 ))}
             </div>
