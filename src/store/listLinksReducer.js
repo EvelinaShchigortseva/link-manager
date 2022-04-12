@@ -29,6 +29,7 @@ const addLink = 'addLink'
 const changeLink = 'changeLink'
 const deleteLink = 'deleteLink'
 const allLinks = 'allLinks'
+const findLinks = 'findLinks'
 
 export const listLinksReducer = (state = defaultValue, action) => {
     switch (action.type) {
@@ -36,6 +37,10 @@ export const listLinksReducer = (state = defaultValue, action) => {
             return {...state, filterLinks: [...state.listLinks].filter((item) => item.currentGroup.includes(action.payload)) }
         case allLinks:
             return {...state, filterLinks: [...state.listLinks] }
+        case findLinks:
+            return {...state, filterLinks:[...state.listLinks].filter(link=> (
+                link.nameLink.toLowerCase().includes(action.payload.toLowerCase()) || 
+                link.url.toLowerCase().includes(action.payload.toLowerCase())))}
         case addLink:
             return {...state, listLinks: [...state.listLinks, action.payload] }
         case changeLink:
@@ -61,6 +66,10 @@ export const filterLinksAction = (items) => ({
     type: filterLinks,
     payload: items
 });
+
+export const findLinksAction = (payload)=> ({
+    type: findLinks, payload
+})
 
 export const addLinkAction = (payload) => ({ type: addLink, payload })
 
