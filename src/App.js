@@ -1,18 +1,11 @@
-import Header from "./components/Header/Header";
-import { Sidebar } from "./components/sidebar/sidebar";
-import "./style.css";
-import Content from "./components/content/content";
+import AppScreen from './components/AppScreen'
 
 function App() {
-  return (
-    <div className="App">
-      <Header />
-      <div className="main">
-        <Sidebar />
-        <Content />
-      </div>
-    </div>
-  );
+    return (
+        <div className="App">
+          <AppScreen />
+        </div>
+    )
 }
 
-export default App;
+export default App

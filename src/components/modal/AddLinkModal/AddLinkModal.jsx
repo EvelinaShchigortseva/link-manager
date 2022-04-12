@@ -1,134 +1,121 @@
-import * as React from "react";
-import { Button, Dialog, DialogContent } from "@mui/material";
-import {
-  Checkbox,
-  FormControl,
-  FormControlLabel,
-  InputLabel,
-  MenuItem,
-  Select,
-  TextField,
-} from "@mui/material";
-import DialogTitle from "@mui/material/DialogTitle";
-import DialogActions from "@mui/material/DialogActions";
-import "./AddLinkModal.css";
-import { useDispatch, useSelector } from "react-redux";
-import { addLinkAction } from "../../../store/listLinksReducer";
-import { getListGroups } from "../../../store/listGroupsReducer";
-import { useState } from "react";
+import * as React from 'react'
+import {Button, Dialog, DialogContent} from '@mui/material'
+import {Checkbox, FormControl, FormControlLabel, InputLabel, MenuItem, Select, TextField} from '@mui/material'
+import DialogTitle from '@mui/material/DialogTitle'
+import DialogActions from '@mui/material/DialogActions'
+import './AddLinkModal.css'
+import {useDispatch, useSelector} from 'react-redux'
+import {addLinkAction} from '../../../store/listLinksReducer'
+import {useForm} from './useForm'
 
 const INITIAL_STATE = {
-  id: null,
-  nameLink: "",
-  url: "",
-  descriptionLink: "",
-  currentGroup: "",
-};
+    id: null,
+    nameLink: '',
+    url: '',
+    descriptionLink: '',
+    currentGroup: '',
+}
 
-export default function AddLinkModal({ isOpen, handleOpen }) {
-  const [bookmark, setBookmark] = useState(INITIAL_STATE);
-  const [checked, setChecked] = React.useState(false);
+export default function AddLinkModal({isOpen, handleOpen}) {
+    const {bookmark, setBookmark, validate, error, setError} = useForm(INITIAL_STATE)
+    const [checked, setChecked] = React.useState(false)
 
-  // const [isOpen, setIsOpen] = React.useState(false);
+    const dispatch = useDispatch()
 
-  const dispatch = useDispatch();
+    const groups = useSelector((state) => state.listGroups.listGroups)
 
-  const groups = useSelector(getListGroups);
+    const handleGroupChange = (event) => {
+        setBookmark((prevState) => ({
+            ...prevState,
+            currentGroup: event.target.value,
+        }))
+    }
 
-  const handleGroupChange = (event) => {
-    setBookmark((prevState) => ({
-      ...prevState,
-      currentGroup: event.target.value,
-    }));
-  };
+    const handleChangeCheckbox = (event) => {
+        setChecked(event.target.checked)
+    }
 
-  // const handleOpen = () => setIsOpen((prevState) => !prevState);
+    const handleSubmit = (e) => {
+        e.preventDefault()
 
-  const handleChangeCheckbox = (event) => {
-    setChecked(event.target.checked);
-  };
+        const payload = {
+            ...bookmark,
+            currentGroup: checked ? 'Список для чтения' : bookmark.currentGroup,
+            id: Date.now(),
+        }
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
+        if (validate()) {
+            dispatch(addLinkAction(payload))
+            handleOpen()
+            setBookmark(INITIAL_STATE)
+        }
+    }
 
-    const payload = {
-      ...bookmark,
-      currentGroup: checked ? "Список для чтения" : bookmark.currentGroup,
-      id: Date.now(),
-    };
-    dispatch(addLinkAction(payload));
-    setBookmark(INITIAL_STATE);
-    handleOpen();
-  };
+    const closedModal = () => {
+        handleOpen()
+        setError({})
+        setBookmark(INITIAL_STATE)
+    }
 
-  return (
-    <div>
+    return (
+        <div>
+            <Dialog sx={{height: '700px'}} open={isOpen} onClose={closedModal}>
+                <DialogTitle>Добавить ссылку</DialogTitle>
+                <DialogContent>
+                    <form className="form" onSubmit={handleSubmit}>
+                        <TextField
+                            label="Название ссылки"
+                            onChange={(e) => {
+                                setBookmark({...bookmark, nameLink: e.target.value})
+                            }}
+                            {...(error.nameLink && {error: true, helperText: error.nameLink})}
+                        />
+                        <TextField
+                            label="Url"
+                            onChange={(e) => {
+                                setBookmark({...bookmark, url: e.target.value})
+                            }}
+                            {...(error.url && {error: true, helperText: error.url})}
+                        />
+                        <TextField
+                            label="Описание"
+                            onChange={(e) => {
+                                setBookmark({...bookmark, descriptionLink: e.target.value})
+                            }}
+                            {...(error.descriptionLink && {error: true, helperText: error.descriptionLink})}
+                        />
 
-      <Dialog sx={{ height: "700px" }} open={isOpen} onClose={handleOpen}>
-        <DialogTitle>Добавить ссылку</DialogTitle>
-        <DialogContent>
-          <form className="form" onSubmit={handleSubmit}>
-            <TextField
-              label="Название ссылки"
-              onChange={(e) => {
-                setBookmark({ ...bookmark, nameLink: e.target.value });
-              }}
-            />
-            <TextField
-              label="Url"
-              onChange={(e) => {
-                setBookmark({ ...bookmark, url: e.target.value });
-              }}
-            />
-            <TextField
-              label="Описание"
-              onChange={(e) => {
-                setBookmark({ ...bookmark, descriptionLink: e.target.value });
-              }}
-            />
-            {checked ? (
-              <div>Список для чтения</div>
-            ) : (
-              <FormControl fullWidth margin="normal">
-                <InputLabel id="demo-simple-select-label">Group</InputLabel>
-                <Select
-                  labelId="demo-simple-select-label"
-                  id="demo-simple-select"
-                  value={bookmark.currentGroup}
-                  onChange={handleGroupChange}
-                >
-                  {groups.map((group) => (
-                    <MenuItem value={group}>{group}</MenuItem>
-                  ))}
-                </Select>
-              </FormControl>
-            )}
-            <FormControlLabel
-              control={
-                <Checkbox checked={checked} onChange={handleChangeCheckbox} />
-              }
-              label="Список для чтения"
-            />
-            <DialogActions>
-              <Button
-                disabled={false}
-                type="submit"
-                color="inherit"
-                sx={{ backgroundColor: "#e6e8e8" }}
-              >
-                Добавить ссылку
-              </Button>
-              <Button
-                color="inherit"
-                sx={{ backgroundColor: "#e6e8e8" }}
-                onClick={handleOpen}
-              >
-                Закрыть
-              </Button>
-            </DialogActions>
-          </form>
-        </DialogContent>
-      </Dialog>
-    </div>
-  );
+                        {checked ? (
+                            <div>Список для чтения</div>
+                        ) : (
+                            <FormControl fullWidth margin="normal">
+                                <InputLabel>Group</InputLabel>
+                                <Select value={bookmark.currentGroup} onChange={handleGroupChange}>
+                                    {groups.map((group) => (
+                                        <MenuItem key={group.id} value={group.group}>
+                                            {group.group}
+                                        </MenuItem>
+                                    ))}
+                                </Select>
+                            </FormControl>
+                        )}
+
+                        <FormControlLabel
+                            control={<Checkbox checked={checked} onChange={handleChangeCheckbox} />}
+                            label="Список для чтения"
+                        />
+
+                        <DialogActions>
+                            <Button disabled={false} type="submit" color="inherit" sx={{backgroundColor: '#e6e8e8'}}>
+                                Добавить ссылку
+                            </Button>
+                            <Button color="inherit" sx={{backgroundColor: '#e6e8e8'}} onClick={closedModal}>
+                                Закрыть
+                            </Button>
+                        </DialogActions>
+                    </form>
+                </DialogContent>
+            </Dialog>
+        </div>
+    )
 }
