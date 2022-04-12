@@ -3,14 +3,34 @@ import {Card, CardActions, CardContent, Typography, Link} from '@mui/material'
 import IconButton from '@mui/material/IconButton'
 import DeleteIcon from '@mui/icons-material/Delete'
 import './itemLinks.css'
-import {deleteLinkAction} from '../../../../store/listLinksReducer'
-import {useDispatch} from 'react-redux'
+import {
+    allLinksAction,
+    deleteLinkAction,
+    deletePermanentlyLinkAction,
+    filterLinksAction,
+    saveRemoteLinksAction,
+} from '../../../../store/listLinksReducer'
+import {useDispatch, useSelector} from 'react-redux'
 import EditLinkButton from './EditLinkButton/EditLinkButton'
 
 const ItemLinks = ({link}) => {
+    const currentGroup = useSelector(({listGroups}) => listGroups.currentGroup)
     const dispatch = useDispatch()
     const onRemoveLink = (id) => {
-        dispatch(deleteLinkAction(id))
+        if (currentGroup === 'Корзина') {
+            dispatch(deletePermanentlyLinkAction(id))
+        } else if (currentGroup === 'Все закладки') {
+            dispatch(saveRemoteLinksAction(link))
+            dispatch(deleteLinkAction(id))
+            dispatch(allLinksAction(link))
+        } else if (currentGroup === link.currentGroup) {
+            dispatch(saveRemoteLinksAction(link))
+            dispatch(deleteLinkAction(id))
+            dispatch(filterLinksAction(link.currentGroup))
+        } else {
+            dispatch(saveRemoteLinksAction(link))
+            dispatch(deleteLinkAction(id))
+        }
     }
 
     return (

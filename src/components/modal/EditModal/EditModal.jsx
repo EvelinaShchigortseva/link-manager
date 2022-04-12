@@ -1,16 +1,11 @@
 import React from 'react'
 import './EditModal.css'
-import Dialog from '@mui/material/Dialog'
-import DialogTitle from '@mui/material/DialogTitle'
-import DialogContent from '@mui/material/DialogContent'
-import DialogActions from '@mui/material/DialogActions'
-import TextField from '@mui/material/TextField'
-import Button from '@mui/material/Button'
-import {useState} from 'react'
+import {Dialog, DialogTitle, DialogContent, DialogActions, TextField, Button} from '@mui/material'
 import {useDispatch} from 'react-redux'
-import {changeLinkAction} from '../../../store/listLinksReducer'
+import {allLinksAction, changeLinkAction, filterLinksAction} from '../../../store/listLinksReducer'
+import {useForm} from '../AddLinkModal/useForm'
 
-function EditModal({link, isOpen, handleOpenModal}) {
+function EditModal({link, isOpen, handleOpen}) {
     const INITIAL_STATE = {
         id: link.id,
         nameLink: link.nameLink,
@@ -19,19 +14,40 @@ function EditModal({link, isOpen, handleOpenModal}) {
         currentGroup: link.currentGroup,
     }
 
-    const [bookmark, setBookmark] = useState(INITIAL_STATE)
+    const {bookmark, setBookmark, validate, error, setError, select, checked, groups, box} = useForm(INITIAL_STATE)
 
     const dispatch = useDispatch()
 
     const handleSubmit = (e) => {
         e.preventDefault()
-        dispatch(changeLinkAction(bookmark))
-        handleOpenModal()
+
+        const payload = {
+            ...bookmark,
+            currentGroup: checked ? 'Список для чтения' : bookmark.currentGroup,
+        }
+
+        if (validate()) {
+            dispatch(changeLinkAction(payload))
+            console.log(payload)
+            handleOpen()
+            setBookmark(payload)
+            if (groups.currentGroup === 'Все закладки' || groups.currentGroup === '') {
+                dispatch(allLinksAction())
+            } else if (groups.currentGroup !== payload.currentGroup) {
+                dispatch(filterLinksAction(groups.currentGroup))
+            }
+        }
+    }
+
+    const closedModal = () => {
+        handleOpen()
+        setError({})
+        setBookmark(INITIAL_STATE)
     }
 
     return (
         <div>
-            <Dialog open={isOpen} onClose={handleOpenModal}>
+            <Dialog open={isOpen} onClose={closedModal}>
                 <DialogTitle>Редактирование</DialogTitle>
                 <DialogContent>
                     <form className="form" onSubmit={handleSubmit}>
@@ -41,6 +57,7 @@ function EditModal({link, isOpen, handleOpenModal}) {
                             onChange={(e) => {
                                 setBookmark({...bookmark, nameLink: e.target.value})
                             }}
+                            {...(error.nameLink && {error: true, helperText: error.nameLink})}
                         />
                         <TextField
                             label="Url"
@@ -48,6 +65,7 @@ function EditModal({link, isOpen, handleOpenModal}) {
                             onChange={(e) => {
                                 setBookmark({...bookmark, url: e.target.value})
                             }}
+                            {...(error.url && {error: true, helperText: error.url})}
                         />
                         <TextField
                             onChange={(e) => {
@@ -56,10 +74,14 @@ function EditModal({link, isOpen, handleOpenModal}) {
                             multiline
                             minRows={2}
                             value={bookmark.descriptionLink}
+                            {...(error.descriptionLink && {error: true, helperText: error.descriptionLink})}
                         />
 
+                        {select}
+                        {box}
+
                         <DialogActions>
-                            <Button color="inherit" sx={{backgroundColor: '#e6e8e8'}} onClick={handleOpenModal}>
+                            <Button color="inherit" sx={{backgroundColor: '#e6e8e8'}} onClick={closedModal}>
                                 Закрыть
                             </Button>
                             <Button disabled={false} type="submit" color="inherit" sx={{backgroundColor: '#e6e8e8'}}>
