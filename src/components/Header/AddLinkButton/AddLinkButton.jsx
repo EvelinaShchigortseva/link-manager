@@ -11,12 +11,7 @@ function AddLinkButton() {
     return (
         <div>
             <Stack direction="row" spacing={2}>
-                <Button
-                    className="button"
-                    variant="outlined"
-                    sx={{width: 300}}
-                    startIcon={<StarOutlinedIcon />}
-                    onClick={handleOpen}>
+                <Button variant="outlined" startIcon={<StarOutlinedIcon />} onClick={handleOpen}>
                     Добавить ссылку
                 </Button>
             </Stack>
