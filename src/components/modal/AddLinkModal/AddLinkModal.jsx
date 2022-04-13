@@ -5,7 +5,7 @@ import DialogTitle from '@mui/material/DialogTitle'
 import DialogActions from '@mui/material/DialogActions'
 import './AddLinkModal.css'
 import {useDispatch, useSelector} from 'react-redux'
-import {addLinkAction} from '../../../store/listLinksReducer'
+import {addLinkAction, allLinksAction, filterLinksAction} from '../../../store/listLinksReducer'
 import {useForm} from './useForm'
 
 const INITIAL_STATE = {
@@ -22,7 +22,7 @@ export default function AddLinkModal({isOpen, handleOpen}) {
 
     const dispatch = useDispatch()
 
-    const groups = useSelector((state) => state.listGroups.listGroups)
+    const groups = useSelector((state) => state.listGroups)
 
     const handleGroupChange = (event) => {
         setBookmark((prevState) => ({
@@ -48,6 +48,12 @@ export default function AddLinkModal({isOpen, handleOpen}) {
             dispatch(addLinkAction(payload))
             handleOpen()
             setBookmark(INITIAL_STATE)
+            setChecked(false)
+            if (groups.currentGroup === 'Все закладки') {
+                dispatch(allLinksAction())
+            } else if (groups.currentGroup === payload.currentGroup) {
+                dispatch(filterLinksAction(payload.currentGroup))
+            }
         }
     }
 
@@ -55,6 +61,7 @@ export default function AddLinkModal({isOpen, handleOpen}) {
         handleOpen()
         setError({})
         setBookmark(INITIAL_STATE)
+        setChecked(false)
     }
 
     return (
@@ -91,7 +98,7 @@ export default function AddLinkModal({isOpen, handleOpen}) {
                             <FormControl fullWidth margin="normal">
                                 <InputLabel>Group</InputLabel>
                                 <Select value={bookmark.currentGroup} onChange={handleGroupChange}>
-                                    {groups.map((group) => (
+                                    {groups.listGroups.map((group) => (
                                         <MenuItem key={group.id} value={group.group}>
                                             {group.group}
                                         </MenuItem>

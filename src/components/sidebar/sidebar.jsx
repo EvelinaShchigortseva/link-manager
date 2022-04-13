@@ -6,7 +6,7 @@ import TextField from '@mui/material/TextField'
 import {useDispatch, useSelector} from 'react-redux'
 import {addGroupAction, setGroupAction} from '../../store/listGroupsReducer'
 import './sidebar.css'
-import {allLinksAction, filterLinksAction} from '../../store/listLinksReducer'
+import {allLinksAction, filterLinksAction, remoteLinksAction} from '../../store/listLinksReducer'
 
 export function Sidebar() {
     const [group, setGroup] = useState('')
@@ -19,13 +19,18 @@ export function Sidebar() {
     }
 
     const onShowAllLinks = () => {
-        dispatch(allLinksAction())
         dispatch(setGroupAction('Все закладки'))
+        dispatch(allLinksAction())
     }
 
     const onClickCategory = (item) => {
         dispatch(setGroupAction(item))
         dispatch(filterLinksAction(item))
+    }
+
+    const onShowRemoteLinks = () => {
+        dispatch(setGroupAction('Корзина'))
+        dispatch(remoteLinksAction())
     }
 
     return (
@@ -47,22 +52,22 @@ export function Sidebar() {
             </div>
 
             {groups.map((group) => (
-                <ListItemButton key={group.id} component="a" onClick={() => onClickCategory(group.group)}>
+                <ListItemButton key={group.id} onClick={() => onClickCategory(group.group)}>
                     <ListItemText primary={group.group} />
                 </ListItemButton>
             ))}
 
             <Divider />
-            <ListItemButton onClick={onShowAllLinks}>
+            <ListItemButton onClick={() => onShowAllLinks('Все закладки')}>
                 <ListItemText primary="Все закладки" />
             </ListItemButton>
             <Divider />
 
-            <ListItemButton>
+            <ListItemButton onClick={() => onClickCategory('Список для чтения')}>
                 <ListItemText primary="Список для чтения" />
             </ListItemButton>
 
-            <ListItemButton>
+            <ListItemButton onClick={onShowRemoteLinks}>
                 <ListItemText primary="Корзина" />
             </ListItemButton>
         </div>

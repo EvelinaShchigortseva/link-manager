@@ -12,7 +12,7 @@ function EditLinkButton({link}) {
             <IconButton type="submit" sx={{p: '8px'}} aria-label="search" onClick={handleOpenModal}>
                 <EditIcon color="primary" />
             </IconButton>
-            <EditModal link={link} isOpen={isOpen} handleOpenModal={handleOpenModal} />
+            <EditModal link={link} isOpen={isOpen} handleOpen={handleOpenModal} />
         </div>
     )
 }
