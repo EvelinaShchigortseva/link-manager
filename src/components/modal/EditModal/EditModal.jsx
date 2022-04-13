@@ -28,7 +28,6 @@ function EditModal({link, isOpen, handleOpen}) {
 
         if (validate()) {
             dispatch(changeLinkAction(payload))
-            console.log(payload)
             handleOpen()
             setBookmark(payload)
             if (groups.currentGroup === 'Все закладки' || groups.currentGroup === '') {

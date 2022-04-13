@@ -1,0 +1,11 @@
+@media (max-width: 1500px) {
+    .button {
+        width: 250px;
+    }
+}
+
+@media (max-width: 1030px) {
+    .button {
+        width: 200px;
+    }
+}
