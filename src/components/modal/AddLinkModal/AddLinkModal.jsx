@@ -66,7 +66,7 @@ export default function AddLinkModal({isOpen, handleOpen}) {
 
     return (
         <div>
-            <Dialog sx={{height: '700px'}} open={isOpen} onClose={closedModal}>
+            <Dialog  open={isOpen} onClose={closedModal}>
                 <DialogTitle>Добавить ссылку</DialogTitle>
                 <DialogContent>
                     <form className="form" onSubmit={handleSubmit}>

@@ -19,7 +19,6 @@ const ListLinks = () => {
 
     useEffect(() => {}, [filterLink])
 
-    console.log(filterLink)
     return (
         filterLink && (
             <div>{filterLink.length !== 0 ? filterLink.map((i) => <ItemLinks key={i.id} link={i} />) : <div>Пусто</div>}</div>
