@@ -1,3 +1,4 @@
+import {ConstructionOutlined} from '@mui/icons-material'
 import React, {useEffect} from 'react'
 import {useDispatch, useSelector} from 'react-redux'
 import {setGroupAction} from '../../../store/listGroupsReducer'
@@ -16,16 +17,12 @@ const ListLinks = () => {
         onShowAllLinks()
     }, [])
 
-    useEffect(() => {
-    }, [filterLink])
+    useEffect(() => {}, [filterLink])
 
+    console.log(filterLink)
     return (
         filterLink && (
-            <div>
-                {filterLink.map((i) => (
-                    <ItemLinks key={i.id} link={i} />
-                ))}
-            </div>
+            <div>{filterLink.length !== 0 ? filterLink.map((i) => <ItemLinks key={i.id} link={i} />) : <div>Пусто</div>}</div>
         )
     )
 }

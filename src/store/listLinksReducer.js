@@ -1,5 +1,6 @@
 const defaultValue = {
-    listLinks: [{
+    listLinks: [
+        {
             id: 1,
             nameLink: 'Это первое имя ссылки',
             url: 'Какая-то ссылка',
@@ -38,37 +39,41 @@ const deletePermanentlyLink = 'deletePermanentlyLink'
 export const listLinksReducer = (state = defaultValue, action) => {
     switch (action.type) {
         case filterLinks:
-            return {...state, filterLinks: state.listLinks.filter((item) => item.currentGroup.includes(action.payload)) }
+            return {...state, filterLinks: state.listLinks.filter((item) => item.currentGroup.includes(action.payload))}
         case allLinks:
-            return {...state, filterLinks: [...state.listLinks] }
+            return {...state, filterLinks: [...state.listLinks]}
         case findLinks:
-            return {...state,
-                filterLinks: [...state.listLinks].filter(link => (
-                    link.nameLink.toLowerCase().includes(action.payload.toLowerCase()) ||
-                    link.url.toLowerCase().includes(action.payload.toLowerCase())))
+            return {
+                ...state,
+                filterLinks: [...state.listLinks].filter(
+                    (link) =>
+                        link.nameLink.toLowerCase().includes(action.payload.toLowerCase()) ||
+                        link.url.toLowerCase().includes(action.payload.toLowerCase()),
+                ),
             }
         case addLink:
-            return {...state, listLinks: [...state.listLinks, action.payload] }
+            return {...state, listLinks: [...state.listLinks, action.payload]}
         case changeLink:
             const updatedList = state.listLinks.map((linkItem) => {
                 if (action.payload.id === linkItem.id) {
-                    return {...action.payload }
+                    return {...action.payload}
                 }
 
                 return linkItem
             })
-            return {...state, listLinks: updatedList }
+            return {...state, listLinks: updatedList}
         case deleteLink:
             return {
                 ...state,
                 listLinks: state.listLinks.filter((item) => item.id !== action.payload),
             }
         case saveRemoteLinks:
-            return {...state, remoteLinks: [...state.remoteLinks, action.payload] }
+            return {...state, remoteLinks: [...state.remoteLinks, action.payload]}
         case remoteLinks:
-            return {...state, filterLinks: [...state.remoteLinks] }
+            return {...state, filterLinks: [...state.remoteLinks]}
         case deletePermanentlyLink:
-            return {...state,
+            return {
+                ...state,
                 filterLinks: state.filterLinks.filter((item) => item.id !== action.payload),
                 remoteLinks: state.remoteLinks.filter((item) => item.id !== action.payload),
             }
@@ -79,20 +84,20 @@ export const listLinksReducer = (state = defaultValue, action) => {
 
 export const filterLinksAction = (items) => ({
     type: filterLinks,
-    payload: items
-});
+    payload: items,
+})
 
 export const findLinksAction = (payload) => ({
     type: findLinks,
-    payload
+    payload,
 })
 
-export const addLinkAction = (payload) => ({ type: addLink, payload })
+export const addLinkAction = (payload) => ({type: addLink, payload})
 
-export const changeLinkAction = (payload) => ({ type: changeLink, payload })
+export const changeLinkAction = (payload) => ({type: changeLink, payload})
 
-export const deleteLinkAction = (payload) => ({ type: deleteLink, payload })
-export const saveRemoteLinksAction = (payload) => ({ type: saveRemoteLinks, payload })
-export const remoteLinksAction = () => ({ type: remoteLinks })
-export const allLinksAction = () => ({ type: allLinks })
-export const deletePermanentlyLinkAction = (payload) => ({ type: deletePermanentlyLink, payload })
+export const deleteLinkAction = (payload) => ({type: deleteLink, payload})
+export const saveRemoteLinksAction = (payload) => ({type: saveRemoteLinks, payload})
+export const remoteLinksAction = () => ({type: remoteLinks})
+export const allLinksAction = () => ({type: allLinks})
+export const deletePermanentlyLinkAction = (payload) => ({type: deletePermanentlyLink, payload})

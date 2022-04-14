@@ -14,7 +14,7 @@ export function Sidebar() {
     const dispatch = useDispatch()
 
     const addGroup = () => {
-        if(group){
+        if (group) {
             dispatch(addGroupAction(group))
             setGroup('')
         }
