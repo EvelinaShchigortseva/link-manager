@@ -1,5 +1,4 @@
 import * as React from 'react'
-import './Search.css'
 import Paper from '@mui/material/Paper'
 import InputBase from '@mui/material/InputBase'
 import IconButton from '@mui/material/IconButton'
@@ -29,7 +28,7 @@ export default function Search() {
             }}
             onSubmit = {handleSubmit}
         >
-            <InputBase sx={{ml: 1, flex: 1}} placeholder="Поиск" onChange={(e)=>setValue(e.target.value)} />
+            <InputBase sx={{width: 50, ml: 1, flex: 1}} placeholder="Поиск" onChange={(e)=>setValue(e.target.value)} />
             <IconButton type="submit" sx={{p: '8px'}} aria-label="search">
                 <SearchIcon />
             </IconButton>
