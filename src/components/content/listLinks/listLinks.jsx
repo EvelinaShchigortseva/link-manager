@@ -14,11 +14,9 @@ const ListLinks = () => {
 
     useEffect(() => {
         onShowAllLinks()
-        console.log('Компонент вмонтирован')
     }, [])
 
     useEffect(() => {
-        console.log('Компонент обновлён')
     }, [filterLink])
 
     return (
