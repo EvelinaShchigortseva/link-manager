@@ -12,6 +12,7 @@ function EditModal({link, isOpen, handleOpen}) {
         url: link.url,
         descriptionLink: link.descriptionLink,
         currentGroup: link.currentGroup,
+        read: link.read,
     }
 
     const {bookmark, setBookmark, validate, error, setError, select, checked, groups, box} = useForm(INITIAL_STATE)
@@ -23,7 +24,7 @@ function EditModal({link, isOpen, handleOpen}) {
 
         const payload = {
             ...bookmark,
-            currentGroup: checked ? 'Список для чтения' : bookmark.currentGroup,
+            currentGroup: bookmark.read ? 'Список для чтения' : bookmark.currentGroup,
         }
 
         if (validate()) {
