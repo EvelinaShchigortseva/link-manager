@@ -14,8 +14,10 @@ export function Sidebar() {
     const dispatch = useDispatch()
 
     const addGroup = () => {
-        dispatch(addGroupAction(group))
-        setGroup('')
+        if(group){
+            dispatch(addGroupAction(group))
+            setGroup('')
+        }
     }
 
     const onShowAllLinks = () => {
