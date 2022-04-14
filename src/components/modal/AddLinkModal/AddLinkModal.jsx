@@ -14,6 +14,7 @@ const INITIAL_STATE = {
     url: '',
     descriptionLink: '',
     currentGroup: '',
+    read: false,
 }
 
 export default function AddLinkModal({isOpen, handleOpen}) {
@@ -33,6 +34,7 @@ export default function AddLinkModal({isOpen, handleOpen}) {
 
     const handleChangeCheckbox = (event) => {
         setChecked(event.target.checked)
+        setBookmark({...bookmark, read: event.target.checked})
     }
 
     const handleSubmit = (e) => {

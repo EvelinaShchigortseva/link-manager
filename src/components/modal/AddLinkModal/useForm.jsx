@@ -5,7 +5,6 @@ import {FormControl, InputLabel, MenuItem, Select, Checkbox, FormControlLabel} f
 export function useForm(initialValue) {
     const [bookmark, setBookmark] = React.useState(initialValue)
     const [error, setError] = React.useState({})
-    const [checked, setChecked] = React.useState(false)
 
     const groups = useSelector((state) => state.listGroups)
 
@@ -17,10 +16,10 @@ export function useForm(initialValue) {
     }
 
     const handleChangeCheckbox = (event) => {
-        setChecked((prevState) => !prevState)
+        setBookmark({...bookmark, read: event.target.checked})
     }
 
-    const select = checked ? (
+    const select = bookmark.read ? (
         <div>Список для чтения</div>
     ) : (
         <FormControl fullWidth margin="normal">
@@ -36,7 +35,10 @@ export function useForm(initialValue) {
     )
 
     const box = (
-        <FormControlLabel control={<Checkbox checked={checked} onChange={handleChangeCheckbox} />} label="Список для чтения" />
+        <FormControlLabel
+            control={<Checkbox checked={bookmark.read} onChange={handleChangeCheckbox} />}
+            label="Список для чтения"
+        />
     )
 
     const validate = () => {
@@ -60,8 +62,6 @@ export function useForm(initialValue) {
         error,
         setError,
         select,
-        checked,
-        setChecked,
         groups,
         box,
     }
