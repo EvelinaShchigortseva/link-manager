@@ -26,7 +26,7 @@ export default function Search() {
                 alignItems: 'center',
                 width: 800,
                 height: 36,
-                backgroundColor: mode ? '#039be5' : '#e6e8e8',
+                backgroundColor: mode ? 'secondary' : '#e6e8e8',
             }}
             onSubmit={handleSubmit}>
             <InputBase sx={{width: 50, ml: 1, flex: 1}} placeholder="Поиск" onChange={(e) => setValue(e.target.value)} />

@@ -80,10 +80,10 @@ function EditModal({link, isOpen, handleOpen}) {
                         {box}
 
                         <DialogActions>
-                            <Button color="inherit" sx={{backgroundColor: '#e6e8e8'}} onClick={closedModal}>
+                            <Button color="success" variant="contained" onClick={closedModal}>
                                 Закрыть
                             </Button>
-                            <Button disabled={false} type="submit" color="inherit" sx={{backgroundColor: '#e6e8e8'}}>
+                            <Button disabled={false} type="submit" color="secondary" variant="contained">
                                 Редактировать
                             </Button>
                         </DialogActions>
