@@ -1,11 +1,8 @@
 import AppScreen from './components/AppScreen'
+import {withTheme} from './components/Theme/Theme'
 
-function App() {
-    return (
-        <div className="App">
-            <AppScreen />
-        </div>
-    )
+function App({setDarkMode, darkMode}) {
+    return <AppScreen setDarkMode={setDarkMode} darkMode={darkMode} />
 }
 
-export default App
+export default withTheme(App)

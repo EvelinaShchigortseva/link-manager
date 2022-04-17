@@ -6,7 +6,7 @@ function LogIn() {
     return (
         <div>
             <Stack direction="row" spacing={2}>
-                <Button color="inherit" variant="contained" sx={{width: 'auto'}} startIcon={<AccountCircleIcon />}>
+                <Button color="secondary" variant="contained" sx={{width: 'auto'}} startIcon={<AccountCircleIcon />}>
                     Логин
                 </Button>
             </Stack>

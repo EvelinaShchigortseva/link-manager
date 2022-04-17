@@ -6,9 +6,11 @@ import SearchIcon from '@mui/icons-material/Search'
 import {useDispatch} from 'react-redux'
 import {useState} from 'react'
 import {findLinksAction} from '../../../store/listLinksReducer'
+import {ColorModeContext} from '../../Theme/Theme'
 
 export default function Search() {
     const [value, setValue] = useState('')
+    const mode = React.useContext(ColorModeContext)
     const dispatch = useDispatch()
 
     const handleSubmit = (e) => {
@@ -24,9 +26,9 @@ export default function Search() {
                 alignItems: 'center',
                 width: 800,
                 height: 36,
+                backgroundColor: mode ? '#039be5' : '#e6e8e8',
             }}
-            onSubmit={handleSubmit}
-        >
+            onSubmit={handleSubmit}>
             <InputBase sx={{width: 50, ml: 1, flex: 1}} placeholder="Поиск" onChange={(e) => setValue(e.target.value)} />
             <IconButton type="submit" sx={{p: '8px'}} aria-label="search">
                 <SearchIcon />
