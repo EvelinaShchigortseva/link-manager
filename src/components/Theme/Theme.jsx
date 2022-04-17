@@ -31,7 +31,6 @@ const themeDark = createTheme({
 
 function Theme({children, darkMode}) {
     const defaultTheme = React.useMemo(() => (darkMode ? themeDark : theme), [darkMode])
-
     return (
         <ColorModeContext.Provider value={darkMode}>
             <ThemeProvider theme={defaultTheme}>
