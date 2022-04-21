@@ -68,7 +68,7 @@ export default function AddLinkModal({isOpen, handleOpen}) {
 
     return (
         <div>
-            <Dialog  open={isOpen} onClose={closedModal}>
+            <Dialog sx={{backgoundColor: 'background.paper'}} open={isOpen} onClose={closedModal}>
                 <DialogTitle>Добавить ссылку</DialogTitle>
                 <DialogContent>
                     <form className="form" onSubmit={handleSubmit}>
@@ -115,10 +115,10 @@ export default function AddLinkModal({isOpen, handleOpen}) {
                         />
 
                         <DialogActions>
-                            <Button disabled={false} type="submit" color="inherit" sx={{backgroundColor: '#e6e8e8'}}>
+                            <Button disabled={false} type="submit" variant="contained" color="secondary">
                                 Добавить ссылку
                             </Button>
-                            <Button color="inherit" sx={{backgroundColor: '#e6e8e8'}} onClick={closedModal}>
+                            <Button variant="contained" color="success" onClick={closedModal}>
                                 Закрыть
                             </Button>
                         </DialogActions>

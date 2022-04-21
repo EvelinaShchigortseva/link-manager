@@ -12,8 +12,10 @@ import {
 } from '../../../../store/listLinksReducer'
 import {useDispatch, useSelector} from 'react-redux'
 import EditLinkButton from './EditLinkButton/EditLinkButton'
+import {ColorModeContext} from '../../../Theme/Theme'
 
 const ItemLinks = ({link}) => {
+    const mode = React.useContext(ColorModeContext)
     const currentGroup = useSelector(({listGroups}) => listGroups.currentGroup)
     const dispatch = useDispatch()
     const onRemoveLink = (id) => {
@@ -35,7 +37,8 @@ const ItemLinks = ({link}) => {
 
     return (
         <div>
-            <Card sx={{minWidth: 275, marginBottom: '10px', backgroundColor: '#e6e8e8'}}>
+            <Card
+                sx={{minWidth: 275, marginBottom: '10px', borderColor: '#512da8', backgroundColor: mode ? '#2d333b' : '#e6e8e8'}}>
                 <CardContent sx={{display: 'flex', justifyContent: 'space-between'}}>
                     <div>
                         <Typography sx={{fontSize: 14}} color="text.secondary" gutterBottom value={link.nameLink}>
@@ -43,7 +46,7 @@ const ItemLinks = ({link}) => {
                         </Typography>
 
                         <Typography variant="body2">
-                            <Link href={link.url} underline="always">
+                            <Link href={link.url} underline="always" color="text.secondary">
                                 {link.url}
                             </Link>
                         </Typography>
@@ -56,7 +59,7 @@ const ItemLinks = ({link}) => {
                     <CardActions sx={{p: 0, alignItems: 'flex-start'}}>
                         <EditLinkButton link={link} />
                         <IconButton type="submit" sx={{p: '8px'}} onClick={() => onRemoveLink(link.id)}>
-                            <DeleteIcon />
+                            <DeleteIcon sx={{color: mode ? '#9e9e9e' : '#0d47a1'}} />
                         </IconButton>
                     </CardActions>
                 </CardContent>

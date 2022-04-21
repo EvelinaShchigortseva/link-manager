@@ -10,7 +10,7 @@ function EditLinkButton({link}) {
     return (
         <div>
             <IconButton type="submit" sx={{p: '8px'}} aria-label="search" onClick={handleOpenModal}>
-                <EditIcon color="primary" />
+                <EditIcon sx={{color: '#00c853'}} />
             </IconButton>
             <EditModal link={link} isOpen={isOpen} handleOpen={handleOpenModal} />
         </div>
