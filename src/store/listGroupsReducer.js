@@ -1,9 +1,8 @@
+import { createSlice } from "@reduxjs/toolkit";
 // const defaultValue = {
 //     listGroups: [],
 //     currentGroup: 'Все закладки',
 // }
-
-import { createSlice } from "@reduxjs/toolkit";
 
 // const addGroup = 'addGroup'
 // const setCurrentGroup = 'setCurrentGroup'

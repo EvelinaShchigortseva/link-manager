@@ -13,7 +13,6 @@ export function Sidebar() {
     const groups = useSelector((state) => state.listGroups.listGroups)
     const dispatch = useDispatch()
 
-    console.log(groups);
     const addGroupLink = () => {
         if (groupLink) {
             const group = {
