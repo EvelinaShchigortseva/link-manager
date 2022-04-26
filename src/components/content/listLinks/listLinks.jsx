@@ -2,7 +2,7 @@ import {ConstructionOutlined} from '@mui/icons-material'
 import React, {useEffect} from 'react'
 import {useDispatch, useSelector} from 'react-redux'
 import {setCurrentGroup} from '../../../store/listGroupsReducer'
-import {allLinksAction} from '../../../store/listLinksReducer'
+import {allLinks} from '../../../store/listLinksReducer'
 import ItemLinks from './itemLinks/itemLinks'
 
 const ListLinks = () => {
@@ -10,7 +10,7 @@ const ListLinks = () => {
     const dispatch = useDispatch()
     const onShowAllLinks = () => {
         dispatch(setCurrentGroup('Все закладки'))
-        dispatch(allLinksAction())
+        dispatch(allLinks())
     }
 
     useEffect(() => {

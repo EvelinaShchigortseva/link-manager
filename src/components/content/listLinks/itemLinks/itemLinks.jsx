@@ -3,13 +3,7 @@ import {Card, CardActions, CardContent, Typography, Link} from '@mui/material'
 import IconButton from '@mui/material/IconButton'
 import DeleteIcon from '@mui/icons-material/Delete'
 import './itemLinks.css'
-import {
-    allLinksAction,
-    deleteLinkAction,
-    deletePermanentlyLinkAction,
-    filterLinksAction,
-    saveRemoteLinksAction,
-} from '../../../../store/listLinksReducer'
+import {allLinks, deleteLink, deletePermanentlyLink, filterLinks, saveRemoteLinks} from '../../../../store/listLinksReducer'
 import {useDispatch, useSelector} from 'react-redux'
 import EditLinkButton from './EditLinkButton/EditLinkButton'
 import {ColorModeContext} from '../../../Theme/Theme'
@@ -20,18 +14,18 @@ const ItemLinks = ({link}) => {
     const dispatch = useDispatch()
     const onRemoveLink = (id) => {
         if (currentGroup === 'Корзина') {
-            dispatch(deletePermanentlyLinkAction(id))
+            dispatch(deletePermanentlyLink(id))
         } else if (currentGroup === 'Все закладки') {
-            dispatch(saveRemoteLinksAction(link))
-            dispatch(deleteLinkAction(id))
-            dispatch(allLinksAction(link))
+            dispatch(saveRemoteLinks(link))
+            dispatch(deleteLink(id))
+            dispatch(allLinks(link))
         } else if (currentGroup === link.currentGroup) {
-            dispatch(saveRemoteLinksAction(link))
-            dispatch(deleteLinkAction(id))
-            dispatch(filterLinksAction(link.currentGroup))
+            dispatch(saveRemoteLinks(link))
+            dispatch(deleteLink(id))
+            dispatch(filterLinks(link.currentGroup))
         } else {
-            dispatch(saveRemoteLinksAction(link))
-            dispatch(deleteLinkAction(id))
+            dispatch(saveRemoteLinks(link))
+            dispatch(deleteLink(id))
         }
     }
 

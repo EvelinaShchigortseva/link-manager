@@ -6,7 +6,7 @@ import TextField from '@mui/material/TextField'
 import {useDispatch, useSelector} from 'react-redux'
 import {addGroup, setCurrentGroup} from '../../store/listGroupsReducer'
 import './sidebar.css'
-import {allLinksAction, filterLinksAction, remoteLinksAction} from '../../store/listLinksReducer'
+import {allLinks, filterLinks, remoteLinks} from '../../store/listLinksReducer'
 
 export function Sidebar() {
     const [groupLink, setGroupLink] = useState('')
@@ -17,26 +17,26 @@ export function Sidebar() {
         if (groupLink) {
             const group = {
                 id: Date.now(),
-                group: groupLink
+                group: groupLink,
             }
             dispatch(addGroup(group))
-            setCurrentGroup('')
+            setGroupLink('')
         }
     }
 
     const onShowAllLinks = () => {
         dispatch(setCurrentGroup('Все закладки'))
-        dispatch(allLinksAction())
+        dispatch(allLinks())
     }
 
     const onClickCategory = (item) => {
         dispatch(setCurrentGroup(item))
-        dispatch(filterLinksAction(item))
+        dispatch(filterLinks(item))
     }
 
     const onShowRemoteLinks = () => {
         dispatch(setCurrentGroup('Корзина'))
-        dispatch(remoteLinksAction())
+        dispatch(remoteLinks())
     }
 
     return (

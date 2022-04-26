@@ -2,7 +2,7 @@ import React from 'react'
 import './EditModal.css'
 import {Dialog, DialogTitle, DialogContent, DialogActions, TextField, Button} from '@mui/material'
 import {useDispatch} from 'react-redux'
-import {allLinksAction, changeLinkAction, filterLinksAction} from '../../../store/listLinksReducer'
+import {allLinks, changeLink, filterLinks} from '../../../store/listLinksReducer'
 import {useForm} from '../AddLinkModal/useForm'
 
 function EditModal({link, isOpen, handleOpen}) {
@@ -28,13 +28,13 @@ function EditModal({link, isOpen, handleOpen}) {
         }
 
         if (validate()) {
-            dispatch(changeLinkAction(payload))
+            dispatch(changeLink(payload))
             handleOpen()
             setBookmark(payload)
             if (groups.currentGroup === 'Все закладки' || groups.currentGroup === '') {
-                dispatch(allLinksAction())
+                dispatch(allLinks())
             } else if (groups.currentGroup !== payload.currentGroup) {
-                dispatch(filterLinksAction(groups.currentGroup))
+                dispatch(filterLinks(groups.currentGroup))
             }
         }
     }

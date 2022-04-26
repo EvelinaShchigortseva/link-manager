@@ -5,7 +5,7 @@ import DialogTitle from '@mui/material/DialogTitle'
 import DialogActions from '@mui/material/DialogActions'
 import './AddLinkModal.css'
 import {useDispatch, useSelector} from 'react-redux'
-import {addLinkAction, allLinksAction, filterLinksAction} from '../../../store/listLinksReducer'
+import {addLink, allLinks, filterLinks} from '../../../store/listLinksReducer'
 import {useForm} from './useForm'
 
 const INITIAL_STATE = {
@@ -47,14 +47,14 @@ export default function AddLinkModal({isOpen, handleOpen}) {
         }
 
         if (validate()) {
-            dispatch(addLinkAction(payload))
+            dispatch(addLink(payload))
             handleOpen()
             setBookmark(INITIAL_STATE)
             setChecked(false)
             if (groups.currentGroup === 'Все закладки') {
-                dispatch(allLinksAction())
+                dispatch(allLinks())
             } else if (groups.currentGroup === payload.currentGroup) {
-                dispatch(filterLinksAction(payload.currentGroup))
+                dispatch(filterLinks(payload.currentGroup))
             }
         }
     }
@@ -101,8 +101,8 @@ export default function AddLinkModal({isOpen, handleOpen}) {
                                 <InputLabel>Group</InputLabel>
                                 <Select value={bookmark.currentGroup} onChange={handleGroupChange}>
                                     {groups.listGroups.map((group) => (
-                                        <MenuItem key={group} value={group}>
-                                            {group}
+                                        <MenuItem key={group.id} value={group.group}>
+                                            {group.group}
                                         </MenuItem>
                                     ))}
                                 </Select>

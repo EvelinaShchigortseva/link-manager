@@ -5,7 +5,7 @@ import IconButton from '@mui/material/IconButton'
 import SearchIcon from '@mui/icons-material/Search'
 import {useDispatch} from 'react-redux'
 import {useState} from 'react'
-import {findLinksAction} from '../../../store/listLinksReducer'
+import {findLinks} from '../../../store/listLinksReducer'
 import {ColorModeContext} from '../../Theme/Theme'
 
 export default function Search() {
@@ -15,7 +15,7 @@ export default function Search() {
 
     const handleSubmit = (e) => {
         e.preventDefault()
-        dispatch(findLinksAction(value))
+        dispatch(findLinks(value))
     }
     return (
         <Paper

@@ -27,22 +27,22 @@ import { createSlice } from "@reduxjs/toolkit";
 // })
 
 
-const listGroups = createSlice ({
+const listGroups = createSlice({
     name: "listGroups",
     initialState: {
         listGroups: [],
         currentGroup: 'Все закладки',
     },
-    reducers:{
+    reducers: {
         addGroup(state, action) {
             state.listGroups.push(action.payload)
         },
-        setCurrentGroup(state, action){
+        setCurrentGroup(state, action) {
             state.currentGroup = action.payload
         }
-    
+
     }
 })
 
 export default listGroups.reducer
-export const {addGroup, setCurrentGroup} = listGroups.actions
+export const { addGroup, setCurrentGroup } = listGroups.actions
