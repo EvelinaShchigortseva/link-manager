@@ -1,7 +1,7 @@
-import {createStore, combineReducers} from 'redux'
+import {combineReducers, configureStore} from '@reduxjs/toolkit'
 
 import {composeWithDevTools} from 'redux-devtools-extension'
-import {listGroupsReducer} from './listGroupsReducer'
+import listGroupsReducer from './listGroupsReducer'
 import {listLinksReducer} from './listLinksReducer'
 
 const rootReducer = combineReducers({
@@ -9,4 +9,6 @@ const rootReducer = combineReducers({
     listLinks: listLinksReducer,
 })
 
-export const store = createStore(rootReducer, composeWithDevTools())
+export const store = configureStore({
+    reducer: rootReducer
+})

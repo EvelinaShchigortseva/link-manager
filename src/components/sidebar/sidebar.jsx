@@ -4,34 +4,35 @@ import AddIcon from '@mui/icons-material/Add'
 import IconButton from '@mui/material/IconButton'
 import TextField from '@mui/material/TextField'
 import {useDispatch, useSelector} from 'react-redux'
-import {addGroupAction, setGroupAction} from '../../store/listGroupsReducer'
+import {addGroup, setCurrentGroup} from '../../store/listGroupsReducer'
 import './sidebar.css'
 import {allLinksAction, filterLinksAction, remoteLinksAction} from '../../store/listLinksReducer'
 
 export function Sidebar() {
-    const [group, setGroup] = useState('')
+    const [groupLink, setGroupLink] = useState('')
     const groups = useSelector((state) => state.listGroups.listGroups)
     const dispatch = useDispatch()
 
-    const addGroup = () => {
-        if (group) {
-            dispatch(addGroupAction(group))
-            setGroup('')
+    console.log(groups);
+    const addGroupLink = () => {
+        if (groupLink) {
+            dispatch(addGroup(groupLink))
+            setCurrentGroup('')
         }
     }
 
     const onShowAllLinks = () => {
-        dispatch(setGroupAction('Все закладки'))
+        dispatch(setCurrentGroup('Все закладки'))
         dispatch(allLinksAction())
     }
 
     const onClickCategory = (item) => {
-        dispatch(setGroupAction(item))
+        dispatch(setCurrentGroup(item))
         dispatch(filterLinksAction(item))
     }
 
     const onShowRemoteLinks = () => {
-        dispatch(setGroupAction('Корзина'))
+        dispatch(setCurrentGroup('Корзина'))
         dispatch(remoteLinksAction())
     }
 
@@ -44,18 +45,18 @@ export function Sidebar() {
                     size="small"
                     variant="standard"
                     onChange={(e) => {
-                        setGroup(e.target.value)
+                        setGroupLink(e.target.value)
                     }}
-                    value={group}
+                    value={groupLink}
                 />
-                <IconButton aria-label="delete" size="small" onClick={addGroup}>
+                <IconButton aria-label="delete" size="small" onClick={addGroupLink}>
                     <AddIcon fontSize="inherit" />
                 </IconButton>
             </div>
 
             {groups.map((group) => (
-                <ListItemButton key={group.id} onClick={() => onClickCategory(group.group)}>
-                    <ListItemText primary={group.group} />
+                <ListItemButton key={group} onClick={() => onClickCategory(group)}>
+                    <ListItemText primary={group} />
                 </ListItemButton>
             ))}
 

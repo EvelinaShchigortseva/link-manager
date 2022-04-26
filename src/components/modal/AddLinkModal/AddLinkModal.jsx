@@ -101,8 +101,8 @@ export default function AddLinkModal({isOpen, handleOpen}) {
                                 <InputLabel>Group</InputLabel>
                                 <Select value={bookmark.currentGroup} onChange={handleGroupChange}>
                                     {groups.listGroups.map((group) => (
-                                        <MenuItem key={group.id} value={group.group}>
-                                            {group.group}
+                                        <MenuItem key={group} value={group}>
+                                            {group}
                                         </MenuItem>
                                     ))}
                                 </Select>
