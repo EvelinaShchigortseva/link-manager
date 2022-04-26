@@ -16,7 +16,11 @@ export function Sidebar() {
     console.log(groups);
     const addGroupLink = () => {
         if (groupLink) {
-            dispatch(addGroup(groupLink))
+            const group = {
+                id: Date.now(),
+                group: groupLink
+            }
+            dispatch(addGroup(group))
             setCurrentGroup('')
         }
     }
@@ -55,8 +59,8 @@ export function Sidebar() {
             </div>
 
             {groups.map((group) => (
-                <ListItemButton key={group} onClick={() => onClickCategory(group)}>
-                    <ListItemText primary={group} />
+                <ListItemButton key={group.id} onClick={() => onClickCategory(group.group)}>
+                    <ListItemText primary={group.group} />
                 </ListItemButton>
             ))}
 
