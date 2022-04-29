@@ -1,22 +1,29 @@
 import React from 'react'
-import {useSelector} from 'react-redux'
-import {FormControl, InputLabel, MenuItem, Select, Checkbox, FormControlLabel} from '@mui/material'
+import {FormControl, InputLabel, MenuItem, Select, Checkbox, FormControlLabel, SelectChangeEvent} from '@mui/material'
+import {IGroup, IInitialState} from '../../../types/types'
+import {useAppSelector} from '../../../store/hooks'
 
-export function useForm(initialValue) {
+interface IError {
+    nameLink?: string | boolean
+    url?: string | boolean
+    descriptionLink?: string | boolean
+}
+
+export const useForm = (initialValue: IInitialState) => {
     const [bookmark, setBookmark] = React.useState(initialValue)
-    const [error, setError] = React.useState({})
+    const [error, setError] = React.useState<IError>({})
 
-    const groups = useSelector((state) => state.listGroups)
+    const groups = useAppSelector((state) => state.listGroups)
 
-    const handleGroupChange = (event) => {
+    const handleGroupChange = (event: SelectChangeEvent) => {
         setBookmark((prevState) => ({
             ...prevState,
             currentGroup: event.target.value,
         }))
     }
 
-    const handleChangeCheckbox = (event) => {
-        setBookmark({...bookmark, read: event.target.checked})
+    const handleChangeCheckbox = (event: React.ChangeEvent<HTMLInputElement>) => {
+        setBookmark({...bookmark, read: event.target.checked, currentGroup: ''})
     }
 
     const select = bookmark.read ? (
@@ -25,7 +32,7 @@ export function useForm(initialValue) {
         <FormControl fullWidth margin="normal">
             <InputLabel>Group</InputLabel>
             <Select value={bookmark.currentGroup} onChange={handleGroupChange}>
-                {groups.listGroups.map((group) => (
+                {groups.listGroups.map((group: IGroup) => (
                     <MenuItem key={group.id} value={group.group}>
                         {group.group}
                     </MenuItem>
@@ -41,8 +48,8 @@ export function useForm(initialValue) {
         />
     )
 
-    const validate = () => {
-        let temp = []
+    function validate() {
+        let temp: any = []
         temp.nameLink = bookmark.nameLink ? '' : 'Это поле обязательно к заполнению'
         temp.url =
             /((([A-Za-z]{3,9}:(?:\/\/)?)(?:[-;:&=,\w]+@)?[A-Za-z0-9.-]+|(?:www.|[-;:&=,\w]+@)[A-Za-z0-9.-]+)((?:\/[~%.\w-_]*)?\??(?:[-=&;%@.\w_]*)#?(?:[\w]*))?)/.test(

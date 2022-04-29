@@ -1,4 +1,3 @@
-import {ConstructionOutlined} from '@mui/icons-material'
 import React, {useEffect} from 'react'
 import {useDispatch, useSelector} from 'react-redux'
 import {setCurrentGroup} from '../../../store/listGroupsReducer'

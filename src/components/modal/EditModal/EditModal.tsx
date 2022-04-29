@@ -1,11 +1,18 @@
-import React from 'react'
+import React, {FC} from 'react'
 import './EditModal.css'
 import {Dialog, DialogTitle, DialogContent, DialogActions, TextField, Button} from '@mui/material'
-import {useDispatch} from 'react-redux'
+import {useAppDispatch} from '../../../store/hooks'
 import {allLinks, changeLink, filterLinks} from '../../../store/listLinksReducer'
 import {useForm} from '../AddLinkModal/useForm'
+import {IInitialState} from '../../../types/types'
 
-function EditModal({link, isOpen, handleOpen}) {
+interface EditModalProps {
+    link: IInitialState
+    isOpen: boolean
+    handleOpen: any
+}
+
+export const EditModal: FC<EditModalProps> = ({link, isOpen, handleOpen}) => {
     const INITIAL_STATE = {
         id: link.id,
         nameLink: link.nameLink,
@@ -15,11 +22,11 @@ function EditModal({link, isOpen, handleOpen}) {
         read: link.read,
     }
 
-    const {bookmark, setBookmark, validate, error, setError, select, checked, groups, box} = useForm(INITIAL_STATE)
+    const {bookmark, setBookmark, validate, error, setError, select, groups, box} = useForm(INITIAL_STATE)
 
-    const dispatch = useDispatch()
+    const dispatch = useAppDispatch()
 
-    const handleSubmit = (e) => {
+    const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault()
 
         const payload = {
@@ -94,5 +101,3 @@ function EditModal({link, isOpen, handleOpen}) {
         </div>
     )
 }
-
-export default EditModal

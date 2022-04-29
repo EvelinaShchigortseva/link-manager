@@ -1,10 +1,22 @@
-import React from 'react'
+import React, {FC} from 'react'
 import IconButton from '@mui/material/IconButton'
 import EditIcon from '@mui/icons-material/Edit'
-import EditModal from '../../../../modal/EditModal/EditModal'
+import {EditModal} from '../../../../modal/EditModal/EditModal'
 
-function EditLinkButton({link}) {
-    const [isOpen, setIsOpen] = React.useState(false)
+interface ILink {
+    currentGroup: string
+    descriptionLink: string
+    id: number
+    nameLink: string
+    url: string
+}
+
+interface EditLinkButtonProps {
+    link: ILink
+}
+
+export const EditLinkButton: FC<EditLinkButtonProps> = ({link}) => {
+    const [isOpen, setIsOpen] = React.useState<boolean>(false)
     const handleOpenModal = () => setIsOpen((prevState) => !prevState)
 
     return (
@@ -16,5 +28,3 @@ function EditLinkButton({link}) {
         </div>
     )
 }
-
-export default EditLinkButton

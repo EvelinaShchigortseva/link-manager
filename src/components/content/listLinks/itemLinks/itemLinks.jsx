@@ -5,7 +5,7 @@ import DeleteIcon from '@mui/icons-material/Delete'
 import './itemLinks.css'
 import {allLinks, deleteLink, deletePermanentlyLink, filterLinks, saveRemoteLinks} from '../../../../store/listLinksReducer'
 import {useDispatch, useSelector} from 'react-redux'
-import EditLinkButton from './EditLinkButton/EditLinkButton'
+import {EditLinkButton} from './EditLinkButton/EditLinkButton'
 import {ColorModeContext} from '../../../Theme/Theme'
 
 const ItemLinks = ({link}) => {
