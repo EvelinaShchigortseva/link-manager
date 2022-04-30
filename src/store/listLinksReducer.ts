@@ -1,4 +1,5 @@
 import {createSlice} from '@reduxjs/toolkit'
+import {ILink} from '../types/types'
 
 const listLinks = createSlice({
     name: 'listLinks',
@@ -27,8 +28,8 @@ const listLinks = createSlice({
                 currentGroup: '',
             },
         ],
-        filterLinks: [],
-        remoteLinks: [],
+        filterLinks: [] as Array<ILink>,
+        remoteLinks: [] as Array<ILink>,
     },
     reducers: {
         addLink(state, action) {

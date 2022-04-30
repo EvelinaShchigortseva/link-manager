@@ -1,8 +1,8 @@
-import React from 'react'
+import React, {FC} from 'react'
 import AccountCircleIcon from '@mui/icons-material/AccountCircle'
 import {Button, Stack} from '@mui/material'
 
-function LogIn() {
+const LogIn: FC = () => {
     return (
         <div>
             <Stack direction="row" spacing={2}>

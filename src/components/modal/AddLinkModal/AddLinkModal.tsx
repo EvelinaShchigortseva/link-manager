@@ -13,7 +13,7 @@ import { useAppSelector } from '../../../store/hooks'
 
 interface AddModalProps {
     isOpen: boolean,
-    handleOpen: ()=> boolean,
+    handleOpen: ()=> void,
 }
 
 const INITIAL_STATE: ILink = {

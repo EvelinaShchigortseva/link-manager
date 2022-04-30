@@ -1,11 +1,11 @@
-import React from 'react'
-import Search from './Search/Search'
+import React, {FC} from 'react'
+import {Search} from './Search/Search'
 import './Header.css'
 
 import LogIn from './LogIn/LogIn'
 import AddLinkButton from './AddLinkButton/AddLinkButton'
 
-function Header() {
+const Header: FC = () => {
     return (
         <div className="header">
             <div className="header-top">

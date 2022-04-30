@@ -24,7 +24,7 @@ const ItemLinks: FC<IItemLinks> = ({link}) => {
         } else if (currentGroup === 'Все закладки') {
             dispatch(saveRemoteLinks(link))
             dispatch(deleteLink(id))
-            // dispatch(allLinks(link))
+            // dispatch(allLinks(link)) Нужен для того чтобы обновлялось отображение элементов при удалении, когда мы находимся в разделе "Все закладки"
         } else if (currentGroup === link.currentGroup) {
             dispatch(saveRemoteLinks(link))
             dispatch(deleteLink(id))

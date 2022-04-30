@@ -3,17 +3,17 @@ import Paper from '@mui/material/Paper'
 import InputBase from '@mui/material/InputBase'
 import IconButton from '@mui/material/IconButton'
 import SearchIcon from '@mui/icons-material/Search'
-import {useDispatch} from 'react-redux'
 import {useState} from 'react'
 import {findLinks} from '../../../store/listLinksReducer'
 import {ColorModeContext} from '../../Theme/Theme'
+import {useAppDispatch} from '../../../store/hooks'
 
-export default function Search() {
-    const [value, setValue] = useState('')
+export const Search = () => {
+    const [value, setValue] = useState<string>('')
     const mode = React.useContext(ColorModeContext)
-    const dispatch = useDispatch()
+    const dispatch = useAppDispatch()
 
-    const handleSubmit = (e) => {
+    const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault()
         dispatch(findLinks(value))
     }
@@ -28,8 +28,7 @@ export default function Search() {
                 height: 36,
                 backgroundColor: mode ? 'secondary' : '#e6e8e8',
             }}
-            onSubmit={handleSubmit}
-        >
+            onSubmit={handleSubmit}>
             <InputBase sx={{width: 50, ml: 1, flex: 1}} placeholder="Поиск" onChange={(e) => setValue(e.target.value)} />
             <IconButton type="submit" sx={{p: '8px'}} aria-label="search">
                 <SearchIcon />
