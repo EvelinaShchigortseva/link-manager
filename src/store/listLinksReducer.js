@@ -1,9 +1,10 @@
-import { createSlice } from "@reduxjs/toolkit";
+import {createSlice} from '@reduxjs/toolkit'
 
 const listLinks = createSlice({
-    name: "listLinks",
+    name: 'listLinks',
     initialState: {
-        listLinks: [{
+        listLinks: [
+            {
                 id: 1,
                 nameLink: 'Это первое имя ссылки',
                 url: 'Какая-то ссылка',
@@ -54,8 +55,8 @@ const listLinks = createSlice({
         findLinks(state, action) {
             state.filterLinks = state.listLinks.filter(
                 (link) =>
-                link.nameLink.toLowerCase().includes(action.payload.toLowerCase()) ||
-                link.url.toLowerCase().includes(action.payload.toLowerCase())
+                    link.nameLink.toLowerCase().includes(action.payload.toLowerCase()) ||
+                    link.url.toLowerCase().includes(action.payload.toLowerCase()),
             )
         },
         saveRemoteLinks(state, action) {
@@ -65,12 +66,11 @@ const listLinks = createSlice({
             state.filterLinks = state.remoteLinks
         },
         deletePermanentlyLink(state, action) {
-            state.filterLinks = state.filterLinks.filter((item) => item.id !== action.payload);
+            state.filterLinks = state.filterLinks.filter((item) => item.id !== action.payload)
             state.remoteLinks = state.remoteLinks.filter((item) => item.id !== action.payload)
-        }
-    }
+        },
+    },
 })
-
 
 export default listLinks.reducer
 export const {
@@ -82,5 +82,5 @@ export const {
     findLinks,
     saveRemoteLinks,
     remoteLinks,
-    deletePermanentlyLink
+    deletePermanentlyLink,
 } = listLinks.actions

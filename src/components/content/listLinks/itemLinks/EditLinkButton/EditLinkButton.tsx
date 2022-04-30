@@ -2,14 +2,9 @@ import React, {FC} from 'react'
 import IconButton from '@mui/material/IconButton'
 import EditIcon from '@mui/icons-material/Edit'
 import {EditModal} from '../../../../modal/EditModal/EditModal'
+import { ILink} from '../../../../../types/types'
 
-interface ILink {
-    currentGroup: string
-    descriptionLink: string
-    id: number
-    nameLink: string
-    url: string
-}
+
 
 interface EditLinkButtonProps {
     link: ILink

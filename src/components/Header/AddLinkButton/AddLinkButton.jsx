@@ -1,6 +1,6 @@
 import React from 'react'
 import './AddLinkButton.css'
-import AddLinkModal from '../../modal/AddLinkModal/AddLinkModal'
+import {AddLinkModal} from '../../modal/AddLinkModal/AddLinkModal'
 import {Button, Stack} from '@mui/material'
 import StarOutlinedIcon from '@mui/icons-material/StarOutlined'
 import {ColorModeContext} from '../../Theme/Theme'
@@ -17,7 +17,8 @@ function AddLinkButton() {
                     variant={mode ? 'contained' : 'outlined'}
                     color="secondary"
                     startIcon={<StarOutlinedIcon />}
-                    onClick={handleOpen}>
+                    onClick={handleOpen}
+                >
                     Добавить ссылку
                 </Button>
             </Stack>

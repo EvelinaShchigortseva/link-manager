@@ -1,4 +1,4 @@
-import React, {useState} from 'react'
+import React, {useState, FC} from 'react'
 import {Divider, ListItemButton, ListItemText} from '@mui/material'
 import AddIcon from '@mui/icons-material/Add'
 import IconButton from '@mui/material/IconButton'
@@ -7,13 +7,15 @@ import {useDispatch, useSelector} from 'react-redux'
 import {addGroup, setCurrentGroup} from '../../store/listGroupsReducer'
 import './sidebar.css'
 import {allLinks, filterLinks, remoteLinks} from '../../store/listLinksReducer'
+import { useAppSelector } from '../../store/hooks'
+import { IGroup } from '../../types/types'
 
-export function Sidebar() {
-    const [groupLink, setGroupLink] = useState('')
-    const groups = useSelector((state) => state.listGroups.listGroups)
+export const Sidebar:FC = () => {
+    const [groupLink, setGroupLink] = useState<string>('')
+    const groups: IGroup[] = useAppSelector(state=> state.listGroups.listGroups)
     const dispatch = useDispatch()
 
-    const addGroupLink = () => {
+    const addGroupLink = (): void => {
         if (groupLink) {
             const group = {
                 id: Date.now(),
@@ -24,17 +26,17 @@ export function Sidebar() {
         }
     }
 
-    const onShowAllLinks = () => {
+    const onShowAllLinks = (): void => {
         dispatch(setCurrentGroup('Все закладки'))
         dispatch(allLinks())
     }
 
-    const onClickCategory = (item) => {
+    const onClickCategory = (item: string): void => {
         dispatch(setCurrentGroup(item))
         dispatch(filterLinks(item))
     }
 
-    const onShowRemoteLinks = () => {
+    const onShowRemoteLinks = (): void => {
         dispatch(setCurrentGroup('Корзина'))
         dispatch(remoteLinks())
     }
@@ -64,7 +66,7 @@ export function Sidebar() {
             ))}
 
             <Divider />
-            <ListItemButton onClick={() => onShowAllLinks('Все закладки')}>
+            <ListItemButton onClick={() => onShowAllLinks()}>
                 <ListItemText primary="Все закладки" />
             </ListItemButton>
             <Divider />

@@ -4,10 +4,10 @@ import {Dialog, DialogTitle, DialogContent, DialogActions, TextField, Button} fr
 import {useAppDispatch} from '../../../store/hooks'
 import {allLinks, changeLink, filterLinks} from '../../../store/listLinksReducer'
 import {useForm} from '../AddLinkModal/useForm'
-import {IInitialState} from '../../../types/types'
+import {ILink} from '../../../types/types'
 
 interface EditModalProps {
-    link: IInitialState
+    link: ILink
     isOpen: boolean
     handleOpen: any
 }

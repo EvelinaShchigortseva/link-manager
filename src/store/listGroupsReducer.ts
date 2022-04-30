@@ -1,11 +1,12 @@
 import { createSlice } from "@reduxjs/toolkit";
+import { IListGroups } from "../types/types";
 
 const listGroups = createSlice({
     name: "listGroups",
     initialState: {
         listGroups: [],
         currentGroup: 'Все закладки',
-    },
+    } as IListGroups,
     reducers: {
         addGroup(state, action) {
             state.listGroups.push(action.payload)

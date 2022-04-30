@@ -1,10 +1,11 @@
-import React from 'react'
+import React, {FC} from 'react'
 import ListLinks from './listLinks/listLinks'
 import './content.css'
 import {Typography} from '@mui/material'
-import {useSelector} from 'react-redux'
-const Content = () => {
-    const currentGroup = useSelector(({listGroups}) => listGroups.currentGroup)
+
+import { useAppSelector } from '../../store/hooks'
+const Content:FC = () => {
+    const currentGroup = useAppSelector(state=> state.listGroups.currentGroup)
     return (
         <div className="content">
             <Typography sx={{fontSize: 14}} color="text.secondary" gutterBottom>

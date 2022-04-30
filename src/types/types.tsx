@@ -1,4 +1,4 @@
-export interface IInitialState {
+export interface ILink{
     id: null | number
     nameLink: string
     url: string
@@ -7,9 +7,17 @@ export interface IInitialState {
     read?: boolean
 }
 
+export interface IListGroups {
+    listGroups:IGroup[]
+    currentGroup: string 
+}
+
 export interface IGroup {
     id: number
     group: string
 }
 
-export interface IGroups {}
+export interface Theme {
+    setDarkMode: (arg: boolean) => boolean
+    darkMode: boolean
+}

@@ -1,6 +1,6 @@
 import React from 'react'
 import {FormControl, InputLabel, MenuItem, Select, Checkbox, FormControlLabel, SelectChangeEvent} from '@mui/material'
-import {IGroup, IInitialState} from '../../../types/types'
+import {IGroup, ILink} from '../../../types/types'
 import {useAppSelector} from '../../../store/hooks'
 
 interface IError {
@@ -9,7 +9,7 @@ interface IError {
     descriptionLink?: string | boolean
 }
 
-export const useForm = (initialValue: IInitialState) => {
+export const useForm = (initialValue: ILink) => {
     const [bookmark, setBookmark] = React.useState(initialValue)
     const [error, setError] = React.useState<IError>({})
 

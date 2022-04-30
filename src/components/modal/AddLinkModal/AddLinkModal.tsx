@@ -1,5 +1,5 @@
-import * as React from 'react'
-import {Button, Dialog, DialogContent} from '@mui/material'
+import React, {FC, useState} from 'react'
+import {Button, Dialog, DialogContent, SelectChangeEvent} from '@mui/material'
 import {Checkbox, FormControl, FormControlLabel, InputLabel, MenuItem, Select, TextField} from '@mui/material'
 import DialogTitle from '@mui/material/DialogTitle'
 import DialogActions from '@mui/material/DialogActions'
@@ -7,8 +7,16 @@ import './AddLinkModal.css'
 import {useDispatch, useSelector} from 'react-redux'
 import {addLink, allLinks, filterLinks} from '../../../store/listLinksReducer'
 import {useForm} from './useForm'
+import { ILink, IListGroups } from '../../../types/types'
+import { useAppSelector } from '../../../store/hooks'
 
-const INITIAL_STATE = {
+
+interface AddModalProps {
+    isOpen: boolean,
+    handleOpen: ()=> boolean,
+}
+
+const INITIAL_STATE: ILink = {
     id: null,
     nameLink: '',
     url: '',
@@ -17,27 +25,27 @@ const INITIAL_STATE = {
     read: false,
 }
 
-export default function AddLinkModal({isOpen, handleOpen}) {
+export const AddLinkModal:FC<AddModalProps> = ({isOpen, handleOpen}) => {
     const {bookmark, setBookmark, validate, error, setError} = useForm(INITIAL_STATE)
-    const [checked, setChecked] = React.useState(false)
+    const [checked, setChecked] = useState<boolean>(false)
 
     const dispatch = useDispatch()
 
-    const groups = useSelector((state) => state.listGroups)
+    const groups: IListGroups = useAppSelector(state=> state.listGroups)
 
-    const handleGroupChange = (event) => {
-        setBookmark((prevState) => ({
+    const handleGroupChange = (event: SelectChangeEvent<string>): void => {
+        setBookmark((prevState: ILink) => ({
             ...prevState,
             currentGroup: event.target.value,
         }))
     }
 
-    const handleChangeCheckbox = (event) => {
+    const handleChangeCheckbox = (event: React.ChangeEvent<HTMLInputElement>) :void => {
         setChecked(event.target.checked)
         setBookmark({...bookmark, read: event.target.checked})
     }
 
-    const handleSubmit = (e) => {
+    const handleSubmit = (e: React.FormEvent): void => {
         e.preventDefault()
 
         const payload = {
@@ -59,7 +67,7 @@ export default function AddLinkModal({isOpen, handleOpen}) {
         }
     }
 
-    const closedModal = () => {
+    const closedModal = (): void => {
         handleOpen()
         setError({})
         setBookmark(INITIAL_STATE)

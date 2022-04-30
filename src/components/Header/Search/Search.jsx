@@ -28,7 +28,8 @@ export default function Search() {
                 height: 36,
                 backgroundColor: mode ? 'secondary' : '#e6e8e8',
             }}
-            onSubmit={handleSubmit}>
+            onSubmit={handleSubmit}
+        >
             <InputBase sx={{width: 50, ml: 1, flex: 1}} placeholder="Поиск" onChange={(e) => setValue(e.target.value)} />
             <IconButton type="submit" sx={{p: '8px'}} aria-label="search">
                 <SearchIcon />
